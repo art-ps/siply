@@ -49,4 +49,15 @@ final class TrackTests: XCTestCase {
         XCTAssertEqual(TimeInterval.nan.mmss, "0:00")
         XCTAssertEqual(TimeInterval(-5).mmss, "0:00")
     }
+
+    func testFilterMatchesTitleArtistAlbumCaseInsensitiveTrimmed() {
+        let a = Track(url: url("a.mp3"), title: "Intro", artist: "Yenlik", album: "BIPL")
+        let b = Track(url: url("b.mp3"), title: "Everest", artist: "Darkhan", album: "Peaks")
+        XCTAssertEqual(Track.filter([a, b], query: "  yen "), [a])
+        XCTAssertEqual(Track.filter([a, b], query: "peaks"), [b])
+        XCTAssertEqual(Track.filter([a, b], query: "EVER"), [b])
+        XCTAssertEqual(Track.filter([a, b], query: ""), [a, b])
+        XCTAssertEqual(Track.filter([a, b], query: "   "), [a, b])
+        XCTAssertEqual(Track.filter([a, b], query: "zzz"), [])
+    }
 }

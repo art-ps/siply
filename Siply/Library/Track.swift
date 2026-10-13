@@ -64,6 +64,15 @@ struct Track: Identifiable, Hashable {
         else { word = "треков" }
         return "\(n) \(word)"
     }
+
+    /// Подстрока без учёта регистра по названию, артисту, альбому. Пустой запрос — всё.
+    static func filter(_ tracks: [Track], query: String) -> [Track] {
+        let q = query.trimmingCharacters(in: .whitespaces)
+        guard !q.isEmpty else { return tracks }
+        return tracks.filter { t in
+            [t.title, t.artist, t.album].contains { $0.localizedCaseInsensitiveContains(q) }
+        }
+    }
 }
 
 extension TimeInterval {

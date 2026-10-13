@@ -12,7 +12,7 @@ struct ContentView: View {
                     SidebarView(root: root, selection: $library.selection)
                 } detail: {
                     if let folder = library.selection {
-                        Text(folder.name) // Task 9: FolderView(folder: folder)
+                        FolderView(folder: folder)
                     } else {
                         Text("Выберите папку").foregroundStyle(.secondary)
                     }
