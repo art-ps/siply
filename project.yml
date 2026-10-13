@@ -22,10 +22,12 @@ targets:
         CFBundleDisplayName: Siply
         LSApplicationCategoryType: public.app-category.music
         NSHumanReadableCopyright: ""
+        NSAccentColorName: AccentColor
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: info.pisarev.siply
         PRODUCT_NAME: Siply
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
   SiplyTests:
     type: bundle.unit-test
     platform: macOS

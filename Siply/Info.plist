@@ -22,6 +22,8 @@
 	<string>1</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.music</string>
+	<key>NSAccentColorName</key>
+	<string>AccentColor</string>
 	<key>NSHumanReadableCopyright</key>
 	<string></string>
 </dict>
