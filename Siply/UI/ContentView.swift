@@ -21,6 +21,7 @@ struct ContentView: View {
                 EmptyStateView(open: library.openFolderPanel)
             }
         }
+        .safeAreaInset(edge: .bottom) { PlayerBar() }
         // Пробел — play/pause, когда фокус не в текстовом поле (поле само съедает пробел).
         .onKeyPress(.space) {
             player.togglePlayPause()
