@@ -18,7 +18,7 @@ struct FolderView: View {
             if tracks.isEmpty && !loading {
                 ContentUnavailableView("В этой папке нет музыки", systemImage: "music.note")
             } else {
-                TrackTable(tracks: Track.filter(tracks, query: search)) { track in
+                TrackList(tracks: Track.filter(tracks, query: search), player: player) { track in
                     // Очередь — вся папка в исходном порядке, не отфильтрованная.
                     if let i = tracks.firstIndex(where: { $0.url == track.url }) {
                         player.play(queue: tracks, startingAt: i)
