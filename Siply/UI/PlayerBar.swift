@@ -41,7 +41,7 @@ struct PlayerBar: View {
                     Text(subtitle).font(.caption).foregroundStyle(.secondary).lineLimit(1)
                 }
             }
-            .frame(minWidth: 160, idealWidth: 260, maxWidth: 260, alignment: .leading)
+            .frame(minWidth: 140, idealWidth: 260, maxWidth: 260, alignment: .leading)
 
             HStack(spacing: 8) {
                 Text(shown.mmss)
@@ -64,16 +64,16 @@ struct PlayerBar: View {
             HStack(spacing: 6) {
                 Image(systemName: "speaker.fill")
                 Slider(value: $player.volume, in: 0...1)
-                    .frame(width: 90)
+                    .frame(width: 70)
                     .accessibilityLabel("Громкость")
                 Image(systemName: "speaker.wave.3.fill")
             }
             .foregroundStyle(.secondary)
         }
-        .padding(.horizontal, 16)
+        .padding(.horizontal, 20)
         .padding(.vertical, 10)
-        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12))
-        .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(.separator))
+        .background(.regularMaterial, in: Capsule())
+        .overlay(Capsule().strokeBorder(.separator))
         .frame(maxWidth: 820)
         .frame(maxWidth: .infinity)
         .padding(12)
