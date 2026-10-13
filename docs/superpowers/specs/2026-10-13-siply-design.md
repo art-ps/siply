@@ -78,7 +78,7 @@ project.yml
 
 - `rootBookmark: Data` — security-scoped bookmark корневой папки.
 - `volume`, `shuffle`, `repeatMode`.
-- При старте: резолвим bookmark; stale или недоступен → экран без корня.
+- При старте: резолвим bookmark; папки нет → экран без корня. Stale bookmark, который резолвится в живую папку, принимаем и пересохраняем.
 
 ## UI
 
