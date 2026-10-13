@@ -1,0 +1,48 @@
+name: Siply
+options:
+  bundleIdPrefix: info.pisarev
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+    CODE_SIGN_IDENTITY: "-"
+    CODE_SIGN_STYLE: Manual
+    DEVELOPMENT_TEAM: ""
+targets:
+  Siply:
+    type: application
+    platform: macOS
+    sources: [Siply]
+    info:
+      path: Siply/Info.plist
+      properties:
+        CFBundleDisplayName: Siply
+        LSApplicationCategoryType: public.app-category.music
+        NSHumanReadableCopyright: ""
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: info.pisarev.siply
+        PRODUCT_NAME: Siply
+  SiplyTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources: [SiplyTests]
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+    dependencies:
+      - target: Siply
+schemes:
+  Siply:
+    build:
+      targets:
+        Siply: all
+        SiplyTests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets: [SiplyTests]
