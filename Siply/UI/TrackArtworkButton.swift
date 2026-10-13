@@ -12,6 +12,7 @@ struct TrackArtworkButton: View {
 
     var body: some View {
         Button {
+            if (NSApp.currentEvent?.clickCount ?? 1) > 1 { return }   // даблклик — дело строки, не кнопки
             if isCurrent { player.togglePlayPause() } else { play() }
         } label: {
             ZStack {

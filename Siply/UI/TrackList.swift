@@ -83,6 +83,8 @@ struct TrackList: NSViewRepresentable {
             table?.reloadData()
             if let selectedURL, let i = tracks.firstIndex(where: { $0.url == selectedURL }) {
                 table?.selectRowIndexes([i], byExtendingSelection: false)
+            } else {
+                table?.deselectAll(nil)
             }
         }
     }

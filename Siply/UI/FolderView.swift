@@ -24,6 +24,7 @@ struct FolderView: View {
                         player.play(queue: tracks, startingAt: i)
                     }
                 }
+                .id(folder.url)
             }
         }
         .searchable(text: $search, placement: .toolbar, prompt: "Найти в папке")
