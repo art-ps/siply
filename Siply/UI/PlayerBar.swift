@@ -9,10 +9,10 @@ struct PlayerBar: View {
                 .frame(maxWidth: .infinity)
             VolumeControl()
         }
-        .padding(.horizontal, 16)
+        .padding(.horizontal, 22)
         .frame(height: 60)
-        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 20))
-        .overlay(RoundedRectangle(cornerRadius: 20).strokeBorder(.separator))
+        .background(.regularMaterial, in: Capsule())
+        .overlay(Capsule().strokeBorder(.separator))
         .frame(maxWidth: 820)
         .frame(maxWidth: .infinity)
         .padding(.horizontal, 12)
