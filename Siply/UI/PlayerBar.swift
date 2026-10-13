@@ -74,6 +74,8 @@ struct PlayerBar: View {
         .padding(.vertical, 10)
         .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12))
         .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(.separator))
+        .frame(maxWidth: 820)
+        .frame(maxWidth: .infinity)
         .padding(12)
     }
 

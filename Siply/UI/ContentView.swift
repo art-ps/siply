@@ -11,17 +11,19 @@ struct ContentView: View {
                 NavigationSplitView {
                     SidebarView(root: root, selection: $library.selection)
                 } detail: {
-                    if let folder = library.selection {
-                        FolderView(folder: folder)
-                    } else {
-                        Text("Выберите папку").foregroundStyle(.secondary)
+                    Group {
+                        if let folder = library.selection {
+                            FolderView(folder: folder)
+                        } else {
+                            Text("Выберите папку").foregroundStyle(.secondary)
+                        }
                     }
+                    .safeAreaInset(edge: .bottom) { PlayerBar() }
                 }
             } else {
                 EmptyStateView(open: library.openFolderPanel)
             }
         }
-        .safeAreaInset(edge: .bottom) { PlayerBar() }
         // Пробел — play/pause, когда фокус не в текстовом поле (поле само съедает пробел).
         .onKeyPress(.space) {
             player.togglePlayPause()
