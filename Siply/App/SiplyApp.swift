@@ -3,7 +3,14 @@ import SwiftUI
 @main
 struct SiplyApp: App {
     @State private var library = Library()
-    @State private var player = PlayerModel(engine: AVAudioPlayerEngine())
+    @State private var player: PlayerModel
+    private let nowPlaying: NowPlaying
+
+    init() {
+        let player = PlayerModel(engine: AVAudioPlayerEngine())
+        _player = State(initialValue: player)
+        nowPlaying = NowPlaying(player: player)
+    }
 
     var body: some Scene {
         WindowGroup {
