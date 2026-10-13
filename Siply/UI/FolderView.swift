@@ -17,6 +17,7 @@ struct FolderView: View {
                 .padding(24)
             if tracks.isEmpty && !loading {
                 ContentUnavailableView("В этой папке нет музыки", systemImage: "music.note")
+                    .padding(.bottom, 84)
             } else {
                 TrackList(tracks: Track.filter(tracks, query: search), player: player) { track in
                     // Очередь — вся папка в исходном порядке, не отфильтрованная.

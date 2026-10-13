@@ -68,6 +68,9 @@ struct TrackList: NSViewRepresentable {
         scroll.documentView = table
         scroll.hasVerticalScroller = true
         scroll.drawsBackground = false
+        scroll.automaticallyAdjustsContentInsets = false
+        scroll.contentInsets = NSEdgeInsets(top: 0, left: 0, bottom: 84, right: 0)   // место под плавающий бар
+        scroll.scrollerInsets = NSEdgeInsets(top: 0, left: 0, bottom: 84, right: 0)
         return scroll
     }
 

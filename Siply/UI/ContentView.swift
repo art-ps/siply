@@ -18,7 +18,7 @@ struct ContentView: View {
                             Text("Выберите папку").foregroundStyle(.secondary)
                         }
                     }
-                    .safeAreaInset(edge: .bottom) { PlayerBar() }
+                    .overlay(alignment: .bottom) { PlayerBar() }
                 }
             } else {
                 EmptyStateView(open: library.openFolderPanel)
