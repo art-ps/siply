@@ -32,6 +32,8 @@ final class PlayerModel {
     /// Порядок обхода индексов queue: прямой или перемешанный (текущий — первым).
     @ObservationIgnored private var order: [Int] = []
     @ObservationIgnored private var timer: Timer?
+    /// Удалась ли хоть одна загрузка с начала последнего play(queue:startingAt:).
+    @ObservationIgnored private var didLoad = false
 
     private enum Keys {
         static let volume = "volume"
@@ -56,10 +58,13 @@ final class PlayerModel {
         self.queue = queue
         currentIndex = index
         rebuildOrder()
+        didLoad = false
         if load(index) {
             startPlaying()
         } else {
-            step(by: 1, wrap: false)
+            step(by: 1, wrap: true)
+            // Ни один трек не открылся — указывать не на что, движок держит старый трек.
+            if !didLoad { currentIndex = nil }
         }
     }
 
@@ -127,6 +132,7 @@ final class PlayerModel {
         do {
             try engine.load(queue[idx].url)
             currentTime = 0
+            didLoad = true
             return true
         } catch {
             NSLog("Siply: не удалось открыть %@: %@", queue[idx].url.lastPathComponent, "\(error)")
@@ -157,9 +163,12 @@ final class PlayerModel {
 
     private func startTimer() {
         stopTimer()
-        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
+        let t = Timer(timeInterval: 0.5, repeats: true) { [weak self] _ in
             MainActor.assumeIsolated { self?.currentTime = self?.engine.currentTime ?? 0 }
         }
+        // .common — чтобы прогресс не замирал, пока открыто меню.
+        RunLoop.main.add(t, forMode: .common)
+        timer = t
     }
 
     private func stopTimer() {

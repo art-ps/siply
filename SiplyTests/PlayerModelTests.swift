@@ -142,6 +142,14 @@ final class PlayerModelTests: XCTestCase {
         engine.failing = [tracks[0].url]
         player.play(queue: tracks, startingAt: 0)
         XCTAssertEqual(player.currentTrack, tracks[1])
+        XCTAssertTrue(player.isPlaying)
+    }
+
+    func testUnreadableStartAtEndWrapsToFirst() {
+        engine.failing = [tracks[3].url]
+        player.play(queue: tracks, startingAt: 3)
+        XCTAssertEqual(player.currentTrack, tracks[0])
+        XCTAssertTrue(player.isPlaying)
     }
 
     func testAllUnreadableStops() {
@@ -149,6 +157,10 @@ final class PlayerModelTests: XCTestCase {
         player.play(queue: tracks, startingAt: 0)
         XCTAssertFalse(player.isPlaying)
         XCTAssertEqual(engine.loaded, [])
+        XCTAssertNil(player.currentTrack)
+        player.togglePlayPause()
+        XCTAssertFalse(player.isPlaying)
+        XCTAssertFalse(engine.playing)
     }
 
     func testCycleRepeat() {
