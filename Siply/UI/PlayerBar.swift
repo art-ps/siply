@@ -11,8 +11,7 @@ struct PlayerBar: View {
         }
         .padding(.horizontal, 22)
         .frame(height: 60)
-        .background(.thinMaterial, in: Capsule())
-        .overlay(Capsule().strokeBorder(.separator))
+        .modifier(BarGlass())
         .frame(maxWidth: 820)
         .frame(maxWidth: .infinity)
         .padding(.horizontal, 12)
