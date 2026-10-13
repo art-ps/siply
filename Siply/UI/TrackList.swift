@@ -41,6 +41,7 @@ struct TrackList: NSViewRepresentable {
         table.rowHeight = 44
         table.style = .inset
         table.allowsMultipleSelection = false
+        table.allowsTypeSelect = false
         table.allowsColumnReordering = false
         table.columnAutoresizingStyle = .firstColumnOnlyAutoresizingStyle
         table.backgroundColor = .clear
@@ -58,7 +59,9 @@ struct TrackList: NSViewRepresentable {
         table.dataSource = context.coordinator
         table.delegate = context.coordinator
         table.target = context.coordinator
-        table.doubleAction = #selector(Coordinator.activateRow(_:))
+        table.doubleAction = #selector(Coordinator.rowDoubleClicked(_:))
+        table.onActivate = { [weak coordinator = context.coordinator] in coordinator?.activateSelectedRow() }
+        table.onSpace = { [weak coordinator = context.coordinator] in coordinator?.player.togglePlayPause() }
         context.coordinator.table = table
 
         let scroll = NSScrollView()
@@ -72,8 +75,15 @@ struct TrackList: NSViewRepresentable {
         let coordinator = context.coordinator
         coordinator.play = play
         if tracks != coordinator.tracks {
+            let table = coordinator.table
+            let selectedURL = table.flatMap { t in
+                coordinator.tracks.indices.contains(t.selectedRow) ? coordinator.tracks[t.selectedRow].url : nil
+            }
             coordinator.tracks = tracks
-            coordinator.table?.reloadData()
+            table?.reloadData()
+            if let selectedURL, let i = tracks.firstIndex(where: { $0.url == selectedURL }) {
+                table?.selectRowIndexes([i], byExtendingSelection: false)
+            }
         }
     }
 
@@ -147,22 +157,34 @@ struct TrackList: NSViewRepresentable {
             return cell
         }
 
-        /// Даблклик или Enter по строке.
-        @objc func activateRow(_ sender: NSTableView) {
-            let row = sender.clickedRow >= 0 ? sender.clickedRow : sender.selectedRow
+        /// Даблклик по строке (по заголовку и пустому месту clickedRow == -1).
+        @objc func rowDoubleClicked(_ sender: NSTableView) {
+            let row = sender.clickedRow
             guard tracks.indices.contains(row) else { return }
+            play(tracks[row])
+        }
+
+        /// Enter с клавиатуры по выделенной строке.
+        func activateSelectedRow() {
+            guard let row = table?.selectedRow, tracks.indices.contains(row) else { return }
             play(tracks[row])
         }
     }
 }
 
-/// NSTableView, который по Enter вызывает doubleAction.
+/// NSTableView: Enter — играть выделенный трек, пробел — play/pause.
 final class KeyTableView: NSTableView {
+    var onActivate: (() -> Void)?
+    var onSpace: (() -> Void)?
+
     override func keyDown(with event: NSEvent) {
-        if event.keyCode == 36, selectedRow >= 0, let action = doubleAction {
-            NSApp.sendAction(action, to: target, from: self)
-            return
+        switch event.keyCode {
+        case 36 where selectedRow >= 0, 76 where selectedRow >= 0:
+            onActivate?()
+        case 49:
+            onSpace?()
+        default:
+            super.keyDown(with: event)
         }
-        super.keyDown(with: event)
     }
 }

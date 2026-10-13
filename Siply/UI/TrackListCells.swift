@@ -35,7 +35,7 @@ final class HoverRowView: NSTableRowView {
         super.drawBackground(in: dirtyRect)
         guard isHovered, !isSelected else { return }
         NSColor.labelColor.withAlphaComponent(0.06).setFill()
-        bounds.fill()
+        NSBezierPath(roundedRect: bounds.insetBy(dx: 10, dy: 0), xRadius: 6, yRadius: 6).fill()
     }
 }
 
@@ -47,6 +47,10 @@ final class TitleCellView: NSTableCellView {
     private var player: PlayerModel?
     private var play: () -> Void = {}
     private var hovering = false
+
+    override var backgroundStyle: NSView.BackgroundStyle {
+        didSet { if backgroundStyle != oldValue { render() } }
+    }
 
     func configure(track: Track, player: PlayerModel, hovering: Bool, play: @escaping () -> Void) {
         self.track = track
@@ -64,7 +68,8 @@ final class TitleCellView: NSTableCellView {
 
     private func render() {
         guard let track, let player else { return }
-        let view = TitleCell(track: track, player: player, hovering: hovering, play: play)
+        let view = TitleCell(track: track, player: player, hovering: hovering,
+                             emphasized: backgroundStyle == .emphasized, play: play)
         if let host {
             host.rootView = view
         } else {
