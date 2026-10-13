@@ -11,8 +11,8 @@ struct PlayerBar: View {
         }
         .padding(.horizontal, 16)
         .frame(height: 60)
-        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12))
-        .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(.separator))
+        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 20))
+        .overlay(RoundedRectangle(cornerRadius: 20).strokeBorder(.separator))
         .frame(maxWidth: 820)
         .frame(maxWidth: .infinity)
         .padding(.horizontal, 12)
