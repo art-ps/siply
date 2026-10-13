@@ -171,3 +171,25 @@ struct TrackTable: View {
 - [ ] **Step 3: Проверка** — команда из Global Constraints; Debug-сборка; запуск с демо-папкой; скриншот (без наведения — строки с обложками; hover субагент не сделает — сказать); закрыть, почистить defaults.
 
 - [ ] **Step 4: Commit** — `feat: play/pause по клику на обложке трека`
+
+---
+
+### Task 3: Бар-пилюля и проверка ресайза
+
+**Files:**
+- Modify: `Siply/UI/PlayerBar.swift`
+
+- [ ] **Step 1: Форма.** В `PlayerBar.swift` заменить фон и обводку:
+  `.background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12))` → `.background(.regularMaterial, in: Capsule())`;
+  `.overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(.separator))` → `.overlay(Capsule().strokeBorder(.separator))`;
+  `.padding(.horizontal, 16)` → `.padding(.horizontal, 20)`.
+
+- [ ] **Step 2: Ресайз.** Debug-сборка, seed корня `/tmp/siply-demo/Artist/Album1`, запуск. Через `osascript` выставить размер окна и снять скриншот для каждого случая:
+  ```bash
+  for s in "800 500" "1100 700" "1600 900"; do set -- $s; osascript -e "tell application \"System Events\" to tell process \"Siply\" to set size of front window to {$1, $2}"; sleep 1; screencapture -x /tmp/siply-resize-$1.png; done
+  ```
+  Плюс свёрнутый сайдбар: `osascript -e 'tell application "System Events" to tell process "Siply" to keystroke "s" using {command down, control down}'` (toggle sidebar), скриншот `/tmp/siply-resize-nosidebar.png`. Просмотреть все PNG (Read). Критерий: бар по центру колонки контента, пилюля не обрезана, слайдер прогресса ≥ 100 pt, громкость видна. Если при 800 pt тесно — трек-блок `minWidth: 140`, громкость `.frame(width: 70)`; перепроверить.
+  Если `osascript` упирается в права Accessibility — сказать в отчёте, снять хотя бы дефолтный размер.
+  Закрыть: `pkill -x Siply; defaults delete info.pisarev.siply rootBookmark`.
+
+- [ ] **Step 3: Commit** — `fix: плеер-бар в форме капсулы`
