@@ -20,7 +20,7 @@ struct FolderView: View {
             } else {
                 TrackTable(tracks: Track.filter(tracks, query: search)) { track in
                     // Очередь — вся папка в исходном порядке, не отфильтрованная.
-                    if let i = tracks.firstIndex(of: track) {
+                    if let i = tracks.firstIndex(where: { $0.url == track.url }) {
                         player.play(queue: tracks, startingAt: i)
                     }
                 }
@@ -32,12 +32,17 @@ struct FolderView: View {
     }
 
     private func load() async {
+        // Сбрасываем состояние предыдущей папки, чтобы оно не мелькало под новой шапкой.
         loading = true
         search = ""
+        artwork = nil
         // Сначала имена файлов — таблица видна сразу, теги подъедут следом.
         tracks = LibraryScanner.audioFiles(in: folder.url).map(Track.init)
-        tracks = await LibraryScanner.tracks(in: folder.url)
-        artwork = LibraryScanner.folderArtwork(for: folder.url, tracks: tracks)
+        let loaded = await LibraryScanner.tracks(in: folder.url)
+        // Отменённая (устаревшая) загрузка ничего не пишет.
+        guard !Task.isCancelled else { return }
+        tracks = loaded
+        artwork = LibraryScanner.folderArtwork(for: folder.url, tracks: loaded)
         loading = false
     }
 }
