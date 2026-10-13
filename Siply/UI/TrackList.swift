@@ -71,6 +71,12 @@ struct TrackList: NSViewRepresentable {
         scroll.automaticallyAdjustsContentInsets = false
         scroll.contentInsets = NSEdgeInsets(top: 0, left: 0, bottom: 84, right: 0)   // место под плавающий бар
         scroll.scrollerInsets = NSEdgeInsets(top: 0, left: 0, bottom: 84, right: 0)
+        scroll.contentView.postsBoundsChangedNotifications = true
+        context.coordinator.scrollObserver = NotificationCenter.default.addObserver(
+            forName: NSView.boundsDidChangeNotification, object: scroll.contentView, queue: .main
+        ) { [weak table] _ in
+            MainActor.assumeIsolated { table?.refreshHover() }
+        }
         return scroll
     }
 
@@ -84,6 +90,7 @@ struct TrackList: NSViewRepresentable {
             }
             coordinator.tracks = tracks
             table?.reloadData()
+            table?.refreshHover()
             if let selectedURL, let i = tracks.firstIndex(where: { $0.url == selectedURL }) {
                 table?.selectRowIndexes([i], byExtendingSelection: false)
             } else {
@@ -97,11 +104,16 @@ struct TrackList: NSViewRepresentable {
         var tracks: [Track] = []
         let player: PlayerModel
         var play: (Track) -> Void
-        weak var table: NSTableView?
+        weak var table: KeyTableView?
+        var scrollObserver: NSObjectProtocol?
 
         init(player: PlayerModel, play: @escaping (Track) -> Void) {
             self.player = player
             self.play = play
+        }
+
+        deinit {
+            if let scrollObserver { NotificationCenter.default.removeObserver(scrollObserver) }
         }
 
         func numberOfRows(in tableView: NSTableView) -> Int { tracks.count }
@@ -109,6 +121,7 @@ struct TrackList: NSViewRepresentable {
         func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
             let view = tableView.makeView(withIdentifier: HoverRowView.id, owner: nil) as? HoverRowView ?? HoverRowView()
             view.identifier = HoverRowView.id
+            view.isHovered = ((tableView as? KeyTableView)?.hoveredRow == row)
             view.onHoverChange = { [weak self, weak view] hovered in
                 guard let self, let view else { return }
                 let column = table?.column(withIdentifier: Column.title.id) ?? 0
@@ -125,7 +138,7 @@ struct TrackList: NSViewRepresentable {
             case .title:
                 let cell = tableView.makeView(withIdentifier: TitleCellView.id, owner: nil) as? TitleCellView ?? TitleCellView()
                 cell.identifier = TitleCellView.id
-                let hovered = (tableView.rowView(atRow: row, makeIfNecessary: false) as? HoverRowView)?.isHovered ?? false
+                let hovered = (tableView as? KeyTableView)?.hoveredRow == row
                 cell.configure(track: track, player: player, hovering: hovered) { [weak self] in self?.play(track) }
                 return cell
             case .artist:
@@ -177,10 +190,41 @@ struct TrackList: NSViewRepresentable {
     }
 }
 
-/// NSTableView: Enter — играть выделенный трек, пробел — play/pause.
+/// NSTableView: Enter/Space с клавиатуры и единый трекинг hover — ровно одна строка под курсором.
 final class KeyTableView: NSTableView {
     var onActivate: (() -> Void)?
     var onSpace: (() -> Void)?
+    private(set) var hoveredRow: Int?
+    private var tracking: NSTrackingArea?
+
+    override func updateTrackingAreas() {
+        super.updateTrackingAreas()
+        if let tracking { removeTrackingArea(tracking) }
+        let area = NSTrackingArea(rect: bounds,
+                                  options: [.mouseMoved, .mouseEnteredAndExited, .activeInKeyWindow, .inVisibleRect],
+                                  owner: self)
+        addTrackingArea(area)
+        tracking = area
+    }
+
+    override func mouseMoved(with event: NSEvent) { setHoveredRow(row(at: convert(event.locationInWindow, from: nil))) }
+    override func mouseEntered(with event: NSEvent) { mouseMoved(with: event) }
+    override func mouseExited(with event: NSEvent) { setHoveredRow(-1) }
+
+    /// Пересчитать hover по текущему положению курсора (после скролла / reload).
+    func refreshHover() {
+        guard let window else { setHoveredRow(-1); return }
+        let point = convert(window.mouseLocationOutsideOfEventStream, from: nil)
+        setHoveredRow(visibleRect.contains(point) ? row(at: point) : -1)
+    }
+
+    private func setHoveredRow(_ row: Int) {
+        let new: Int? = row >= 0 ? row : nil
+        guard new != hoveredRow else { return }
+        if let old = hoveredRow { (rowView(atRow: old, makeIfNecessary: false) as? HoverRowView)?.isHovered = false }
+        hoveredRow = new
+        if let new { (rowView(atRow: new, makeIfNecessary: false) as? HoverRowView)?.isHovered = true }
+    }
 
     override func keyDown(with event: NSEvent) {
         switch event.keyCode {

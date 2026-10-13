@@ -5,27 +5,14 @@ import SwiftUI
 final class HoverRowView: NSTableRowView {
     static let id = NSUserInterfaceItemIdentifier("hoverRow")
     var onHoverChange: ((Bool) -> Void)?
-    private(set) var isHovered = false {
+    var isHovered = false {
         didSet {
             guard isHovered != oldValue else { return }
             needsDisplay = true
             onHoverChange?(isHovered)
         }
     }
-    private var tracking: NSTrackingArea?
 
-    override func updateTrackingAreas() {
-        super.updateTrackingAreas()
-        if let tracking { removeTrackingArea(tracking) }
-        let area = NSTrackingArea(rect: bounds,
-                                  options: [.mouseEnteredAndExited, .activeInKeyWindow, .inVisibleRect],
-                                  owner: self)
-        addTrackingArea(area)
-        tracking = area
-    }
-
-    override func mouseEntered(with event: NSEvent) { isHovered = true }
-    override func mouseExited(with event: NSEvent) { isHovered = false }
     override func prepareForReuse() {
         super.prepareForReuse()
         isHovered = false
