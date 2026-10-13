@@ -16,16 +16,20 @@ struct PlayerBar: View {
                 toggle("shuffle", on: player.shuffle, label: "Перемешивать") { player.shuffle.toggle() }
                 Button { player.previous() } label: { Image(systemName: "backward.fill") }
                     .accessibilityLabel("Предыдущий")
+                    .disabled(!hasTrack)
                 Button { player.togglePlayPause() } label: {
                     Image(systemName: player.isPlaying ? "pause.fill" : "play.fill")
                         .font(.title2)
                         .frame(width: 28)
                 }
                 .accessibilityLabel(player.isPlaying ? "Пауза" : "Воспроизвести")
+                .disabled(!hasTrack)
                 Button { player.next() } label: { Image(systemName: "forward.fill") }
                     .accessibilityLabel("Следующий")
+                    .disabled(!hasTrack)
                 toggle(player.repeatMode == .one ? "repeat.1" : "repeat",
-                       on: player.repeatMode != .off, label: "Повторять") { player.cycleRepeat() }
+                       on: player.repeatMode != .off, label: "Повторять",
+                       value: player.repeatMode == .off ? "выключено" : player.repeatMode == .all ? "все" : "один") { player.cycleRepeat() }
             }
             .buttonStyle(.plain)
             .font(.body)
@@ -37,7 +41,7 @@ struct PlayerBar: View {
                     Text(subtitle).font(.caption).foregroundStyle(.secondary).lineLimit(1)
                 }
             }
-            .frame(width: 260, alignment: .leading)
+            .frame(minWidth: 160, idealWidth: 260, maxWidth: 260, alignment: .leading)
 
             HStack(spacing: 8) {
                 Text(shown.mmss)
@@ -48,6 +52,8 @@ struct PlayerBar: View {
                         if !editing, let s = scrub { player.seek(to: s); scrub = nil }
                     }
                 )
+                .frame(minWidth: 120)
+                .accessibilityLabel("Прогресс")
                 .disabled(!hasTrack)
                 Text("-" + max(player.duration - shown, 0).mmss)
             }
@@ -76,12 +82,12 @@ struct PlayerBar: View {
         return [t.artist, t.album].filter { !$0.isEmpty }.joined(separator: " — ")
     }
 
-    private func toggle(_ icon: String, on: Bool, label: String, action: @escaping () -> Void) -> some View {
+    private func toggle(_ icon: String, on: Bool, label: String, value: String? = nil, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Image(systemName: icon)
                 .foregroundStyle(on ? Color.accentColor : .primary)
         }
         .accessibilityLabel(label)
-        .accessibilityValue(on ? "включено" : "выключено")
+        .accessibilityValue(value ?? (on ? "включено" : "выключено"))
     }
 }

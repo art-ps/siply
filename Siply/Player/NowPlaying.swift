@@ -12,6 +12,11 @@ final class NowPlaying {
     init(player: PlayerModel) {
         self.player = player
         let center = MPRemoteCommandCenter.shared()
+        for command in [center.playCommand, center.pauseCommand, center.togglePlayPauseCommand,
+                        center.nextTrackCommand, center.previousTrackCommand] {
+            command.isEnabled = true
+        }
+        center.changePlaybackPositionCommand.isEnabled = true
         center.playCommand.addTarget { [player] _ in
             Task { @MainActor in if !player.isPlaying { player.togglePlayPause() } }
             return .success

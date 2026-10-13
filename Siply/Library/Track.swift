@@ -8,6 +8,7 @@ struct Track: Identifiable, Hashable {
     var album: String = ""
     var duration: TimeInterval = 0
     var trackNumber: Int?
+    var discNumber: Int?
     var artwork: Data?
 
     var id: URL { url }
@@ -18,16 +19,18 @@ struct Track: Identifiable, Hashable {
         let name = url.deletingPathExtension().lastPathComponent
         self.title = name
         self.trackNumber = Track.leadingNumber(in: name)
+        self.discNumber = Track.leadingDisc(in: name)
     }
 
     init(url: URL, title: String, artist: String = "", album: String = "",
-         duration: TimeInterval = 0, trackNumber: Int? = nil, artwork: Data? = nil) {
+         duration: TimeInterval = 0, trackNumber: Int? = nil, discNumber: Int? = nil, artwork: Data? = nil) {
         self.url = url
         self.title = title
         self.artist = artist
         self.album = album
         self.duration = duration
         self.trackNumber = trackNumber
+        self.discNumber = discNumber
         self.artwork = artwork
     }
 
@@ -39,9 +42,18 @@ struct Track: Identifiable, Hashable {
         return Int(match.1)
     }
 
-    /// По номеру трека (без номера — в конец), затем по имени файла как в Finder.
+    /// «1-07 Song» → 1, «2.03 Song» → 2, «03 - Song» → nil. Номер диска из имени файла.
+    static func leadingDisc(in name: String) -> Int? {
+        let regex = /^\s*(\d{1,2})[-.]\s*\d{1,3}[\s.\-_)]/
+        guard let match = name.firstMatch(of: regex) else { return nil }
+        return Int(match.1)
+    }
+
+    /// По диску, затем по номеру трека (без номера — в конец), затем по имени файла как в Finder.
     static func sorted(_ tracks: [Track]) -> [Track] {
         tracks.sorted { a, b in
+            let da = a.discNumber ?? 0, db = b.discNumber ?? 0
+            if da != db { return da < db }
             switch (a.trackNumber, b.trackNumber) {
             case let (x?, y?) where x != y:
                 return x < y

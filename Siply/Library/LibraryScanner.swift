@@ -40,28 +40,36 @@ enum LibraryScanner {
                 }
             }
         }
-        if let n = await trackNumber(from: asset) { track.trackNumber = n }
+        let nums = await numbers(from: asset)
+        if let n = nums.track { track.trackNumber = n }
+        if let d = nums.disc { track.discNumber = d }
         return track
     }
 
-    /// Номер трека из ID3 («3/12») или iTunes-атома (big-endian в байтах 2–3).
-    private static func trackNumber(from asset: AVURLAsset) async -> Int? {
-        guard let items = try? await asset.load(.metadata) else { return nil }
+    /// Номера трека и диска из ID3 («3/12») или iTunes-атомов (big-endian в байтах 2–3).
+    private static func numbers(from asset: AVURLAsset) async -> (track: Int?, disc: Int?) {
+        guard let items = try? await asset.load(.metadata) else { return (nil, nil) }
+        var track: Int?, disc: Int?
+        func id3(_ item: AVMetadataItem) async -> Int? {
+            guard let s = try? await item.load(.stringValue),
+                  let n = Int(s.split(separator: "/").first ?? ""), n > 0 else { return nil }
+            return n
+        }
+        func atom(_ item: AVMetadataItem) async -> Int? {
+            guard let d = try? await item.load(.dataValue), d.count >= 4 else { return nil }
+            let n = Int(d[d.startIndex + 2]) << 8 | Int(d[d.startIndex + 3])
+            return n > 0 ? n : nil
+        }
         for item in items {
             switch item.identifier {
-            case .id3MetadataTrackNumber?:
-                if let s = try? await item.load(.stringValue),
-                   let n = Int(s.split(separator: "/").first ?? ""), n > 0 { return n }
-            case .iTunesMetadataTrackNumber?:
-                if let d = try? await item.load(.dataValue), d.count >= 4 {
-                    let n = Int(d[d.startIndex + 2]) << 8 | Int(d[d.startIndex + 3])
-                    if n > 0 { return n }
-                }
-            default:
-                continue
+            case .id3MetadataTrackNumber?: if let n = await id3(item) { track = n }
+            case .iTunesMetadataTrackNumber?: if let n = await atom(item) { track = n }
+            case .id3MetadataPartOfASet?: if let n = await id3(item) { disc = n }
+            case .iTunesMetadataDiscNumber?: if let n = await atom(item) { disc = n }
+            default: continue
             }
         }
-        return nil
+        return (track, disc)
     }
 
     /// Все треки папки с тегами, параллельно, отсортированные.

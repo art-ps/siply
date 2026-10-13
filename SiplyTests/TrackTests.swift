@@ -14,6 +14,26 @@ final class TrackTests: XCTestCase {
         XCTAssertNil(Track.leadingNumber(in: "2024 remix"))
     }
 
+    func testLeadingDisc() {
+        XCTAssertEqual(Track.leadingDisc(in: "1-07 Song"), 1)
+        XCTAssertEqual(Track.leadingDisc(in: "2.03 Song"), 2)
+        XCTAssertNil(Track.leadingDisc(in: "03 - Song"))
+        XCTAssertNil(Track.leadingDisc(in: "12. Song"))
+        XCTAssertNil(Track.leadingDisc(in: "Song"))
+    }
+
+    func testSortedByDiscThenTrack() {
+        let names = ["2-01 B.mp3", "1-02 A.mp3", "2-02 B.mp3", "1-01 A.mp3"]
+        let sorted = Track.sorted(names.map { Track(url: url($0)) })
+        XCTAssertEqual(sorted.map(\.title), ["1-01 A", "1-02 A", "2-01 B", "2-02 B"])
+    }
+
+    func testSortedTieFallsBackToFilename() {
+        let b = Track(url: url("b.mp3"), title: "B", trackNumber: 1)
+        let a = Track(url: url("a.mp3"), title: "A", trackNumber: 1)
+        XCTAssertEqual(Track.sorted([b, a]).map(\.title), ["A", "B"])
+    }
+
     func testInitFromURLFallsBackToFilename() {
         let t = Track(url: url("02 Intro.flac"))
         XCTAssertEqual(t.title, "02 Intro")

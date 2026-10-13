@@ -32,6 +32,7 @@ final class AVAudioPlayerEngine: NSObject, AudioEngine, AVAudioPlayerDelegate {
     var onFinished: (@MainActor () -> Void)?
 
     func load(_ url: URL) throws {
+        player?.delegate = nil
         player?.stop()
         let p = try AVAudioPlayer(contentsOf: url)
         p.delegate = self
