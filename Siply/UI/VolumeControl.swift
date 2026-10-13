@@ -4,12 +4,14 @@ import SwiftUI
 struct VolumeControl: View {
     @Environment(PlayerModel.self) private var player
     @State private var hovering = false
+    /// Тянем слайдер — не прячем его, даже если курсор ушёл.
+    @State private var editing = false
 
     var body: some View {
         @Bindable var player = player
         HStack(spacing: 8) {
-            if hovering {
-                Slider(value: $player.volume, in: 0...1)
+            if hovering || editing {
+                Slider(value: $player.volume, in: 0...1, onEditingChanged: { editing = $0 })
                     .controlSize(.small)
                     .frame(width: 90)
                     .accessibilityLabel("Громкость")
@@ -25,7 +27,7 @@ struct VolumeControl: View {
         .padding(.vertical, 10)
         .contentShape(Rectangle())
         .onHover { hovering = $0 }
-        .animation(.easeOut(duration: 0.15), value: hovering)
+        .animation(.easeOut(duration: 0.15), value: hovering || editing)
     }
 
     private var icon: String {

@@ -12,7 +12,7 @@ struct NowPlayingBlock: View {
         let track = player.currentTrack
         let duration = max(player.duration, 1)
         let shown = scrub ?? player.currentTime
-        let showTimes = hovering && track != nil
+        let showTimes = (hovering || scrub != nil) && track != nil
 
         HStack(spacing: 10) {
             ArtworkView(data: track?.artwork, size: 40)
