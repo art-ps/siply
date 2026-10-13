@@ -41,7 +41,7 @@ struct PlayerBar: View {
                     Text(subtitle).font(.caption).foregroundStyle(.secondary).lineLimit(1)
                 }
             }
-            .frame(minWidth: 140, idealWidth: 260, maxWidth: 260, alignment: .leading)
+            .frame(minWidth: 120, idealWidth: 260, maxWidth: 260, alignment: .leading)
 
             HStack(spacing: 8) {
                 Text(shown.mmss)
@@ -52,7 +52,7 @@ struct PlayerBar: View {
                         if !editing, let s = scrub { player.seek(to: s); scrub = nil }
                     }
                 )
-                .frame(minWidth: 120)
+                .frame(minWidth: 80)
                 .accessibilityLabel("Прогресс")
                 .disabled(!hasTrack)
                 Text("-" + max(player.duration - shown, 0).mmss)
@@ -64,7 +64,7 @@ struct PlayerBar: View {
             HStack(spacing: 6) {
                 Image(systemName: "speaker.fill")
                 Slider(value: $player.volume, in: 0...1)
-                    .frame(width: 70)
+                    .frame(width: 80)
                     .accessibilityLabel("Громкость")
                 Image(systemName: "speaker.wave.3.fill")
             }

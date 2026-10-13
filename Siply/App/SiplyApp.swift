@@ -17,7 +17,8 @@ struct SiplyApp: App {
             ContentView()
                 .environment(library)
                 .environment(player)
-                .frame(minWidth: 800, minHeight: 500)
+                // 960 — ниже шапка папки и плеер-бар не помещаются в колонку контента.
+                .frame(minWidth: 960, minHeight: 560)
         }
         .commands {
             AppCommands(library: library, player: player)
