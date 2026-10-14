@@ -22,7 +22,7 @@ xcodebuild build -scheme Siply -configuration Release -destination 'generic/plat
 
 codesign --verify --strict --deep "$APP"
 VERSION=$(/usr/libexec/PlistBuddy -c 'Print CFBundleShortVersionString' "$APP/Contents/Info.plist")
-ZIP="$OUT/Siply-$VERSION.zip"
+DMG="$OUT/Siply-$VERSION.dmg"
 
 NOTARY_ENV="${NOTARY_ENV:-$HOME/.config/langflip/notary.env}"   # ponytail: общий с LangFlip, ключ аккаунта
 # shellcheck source=/dev/null
@@ -32,15 +32,19 @@ if [ -z "${NOTARY_KEY:-}" ] || [ -z "${NOTARY_KEY_ID:-}" ] || [ -z "${NOTARY_ISS
   exit 1
 fi
 
-ditto -c -k --keepParent "$APP" "$ZIP"
-RESULT=$(xcrun notarytool submit "$ZIP" --key "$NOTARY_KEY" --key-id "$NOTARY_KEY_ID" \
+# DMG: приложение + ссылка на «Программы» для перетаскивания
+STAGE="$OUT/dmg"
+mkdir -p "$STAGE" && cp -R "$APP" "$STAGE/" && ln -s /Applications "$STAGE/Applications"
+hdiutil create -volname "Siply" -srcfolder "$STAGE" -format UDZO -ov "$DMG" >/dev/null
+codesign --sign "$IDENTITY" --timestamp "$DMG"
+
+RESULT=$(xcrun notarytool submit "$DMG" --key "$NOTARY_KEY" --key-id "$NOTARY_KEY_ID" \
   --issuer "$NOTARY_ISSUER" --wait --output-format json)
 STATUS=$(plutil -extract status raw -o - - <<<"$RESULT")
 if [ "$STATUS" != "Accepted" ]; then
   echo "нотаризация: $STATUS, лог: xcrun notarytool log $(plutil -extract id raw -o - - <<<"$RESULT") --key …" >&2
   exit 1
 fi
-xcrun stapler staple "$APP"
-rm "$ZIP" && ditto -c -k --keepParent "$APP" "$ZIP"
-spctl --assess --type execute -v "$APP"
-echo "$ZIP"
+xcrun stapler staple "$DMG"
+spctl --assess --type open --context context:primary-signature -v "$DMG"
+echo "$DMG"
