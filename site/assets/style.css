@@ -1,0 +1,41 @@
+:root {
+  --bg: #f5f5f7; --card: #ffffff; --ink: #1d1d1f; --ink-soft: #6e6e73;
+  --line: #e3e3e8; --accent: #6b85a3; --accent-ink: #ffffff;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #111214; --card: #1c1d20; --ink: #f5f5f7; --ink-soft: #9a9aa1; --line: #2c2d31; }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 17px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+nav { display: flex; justify-content: space-between; align-items: center; padding: 18px 0; }
+nav .brand { display: flex; gap: 10px; align-items: center; font-weight: 600; color: var(--ink); text-decoration: none; }
+nav .brand img { width: 32px; height: 32px; }
+nav .lang { font-size: 15px; color: var(--ink-soft); text-decoration: none; border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; }
+.hero { text-align: center; padding: 56px 0 40px; }
+.hero img.icon { width: 128px; height: 128px; }
+h1 { font-size: clamp(40px, 7vw, 64px); line-height: 1.05; letter-spacing: -0.02em; margin: 16px 0 12px; }
+.lead { font-size: clamp(18px, 2.4vw, 22px); color: var(--ink-soft); max-width: 640px; margin: 0 auto 28px; }
+.btn {
+  display: inline-flex; gap: 8px; align-items: center; background: var(--accent); color: var(--accent-ink);
+  text-decoration: none; font-weight: 600; padding: 12px 24px; border-radius: 999px;
+}
+.btn:hover { filter: brightness(1.08); }
+.btn:focus-visible, nav a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.meta { margin-top: 12px; font-size: 14px; color: var(--ink-soft); }
+.shot { margin: 24px auto 72px; }
+.shot img { width: 100%; height: auto; border-radius: 14px; box-shadow: 0 30px 80px rgba(0,0,0,.25); display: block; }
+h2 { font-size: clamp(28px, 4vw, 36px); letter-spacing: -0.01em; text-align: center; margin: 0 0 32px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 72px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
+.card h3 { margin: 0 0 6px; font-size: 18px; }
+.card p { margin: 0; color: var(--ink-soft); font-size: 15px; }
+.steps { max-width: 640px; margin: 0 auto 72px; color: var(--ink-soft); }
+.steps li { margin-bottom: 8px; }
+footer { border-top: 1px solid var(--line); padding: 28px 0 40px; text-align: center; font-size: 14px; color: var(--ink-soft); }
+@media (prefers-reduced-motion: no-preference) { .btn { transition: filter .15s; } }

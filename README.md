@@ -1,41 +1,58 @@
-# Siply
+<p align="center">
+  <img src="site/assets/icon.png" width="128" height="128" alt="Siply icon">
+</p>
 
-Лёгкий файловый плеер для macOS. Открываешь папку с музыкой — слева дерево папок,
-справа треки выбранной папки, снизу плеер. Без библиотеки, без базы, без зависимостей.
+<h1 align="center">Siply</h1>
 
-Форматы: MP3, AAC/M4A, FLAC, ALAC, WAV, AIFF, CAF — всё, что играет AVFoundation.
+<p align="center">
+  A lightweight macOS music player for your folders.<br>
+  Open a folder — listen. No import, no library database.
+</p>
 
-## Сборка
+<p align="center">
+  <a href="https://github.com/art-ps/siply/releases/latest"><b>Download for macOS</b></a> ·
+  <a href="https://art-ps.github.io/siply/en/">Website</a> ·
+  <a href="README.ru.md">Русский</a>
+</p>
 
-Нужен Xcode 26 и `xcodegen` (`brew install xcodegen`).
+<p align="center">
+  <img src="site/assets/screenshot.png" alt="Siply window: folder tree on the left, tracks with artwork on the right, floating player bar">
+</p>
 
-```
+## Why
+
+Music apps want to own your collection: import it, index it, sync it. Siply does the opposite. Your folders already are the library — Siply just shows them in a clean, Apple Music-style window and plays them.
+
+## Features
+
+- **Folders are the library.** The sidebar mirrors your folder tree; the main pane lists the tracks of the selected folder.
+- **Native formats.** MP3, AAC/M4A, FLAC, WAV, AIFF, CAF — everything AVFoundation plays, lossless included.
+- **Tags and artwork.** Titles, artists, albums and covers come from file tags. Old Cyrillic ID3 tags in Windows-1251 are shown correctly, not as mojibake.
+- **Apple Music feel.** Album header with Play and Shuffle, track table, floating Liquid Glass player bar on macOS 26.
+- **Search in folder**, resizable columns that remember their widths.
+- **Keyboard and media keys.** Space plays/pauses, Enter plays the selected track; Control Center and media keys work.
+- **Tiny and native.** Swift + SwiftUI + AVFoundation, zero third-party dependencies.
+
+## Install
+
+1. Download `Siply-x.y.z.dmg` from [Releases](https://github.com/art-ps/siply/releases/latest).
+2. Open it and drag **Siply** to **Applications**.
+
+Requires macOS 14 Sonoma or later. Universal build for Apple Silicon and Intel, signed and notarized by Apple.
+
+## Build from source
+
+```bash
+brew install xcodegen
 xcodegen generate
-xcodebuild build -scheme Siply -configuration Debug -derivedDataPath build
-open build/Build/Products/Debug/Siply.app
+xcodebuild -scheme Siply -configuration Release build
 ```
 
-Тесты: `xcodebuild test -scheme Siply -destination 'platform=macOS'`.
+Tests: `xcodebuild test -scheme Siply -destination 'platform=macOS'`.
+Release (sign, notarize, DMG): `scripts/release.sh`.
 
-## Клавиши
+---
 
-- ⌘O — открыть папку, ⌘R — обновить дерево
-- Пробел — play/pause (когда фокус не в поиске), ⌘→ / ⌘← — следующий / предыдущий
-- Медиаклавиши и Control Center работают
-
-## Ручная проверка
-
-1. Запуск без папки → «Откройте папку с музыкой», ⌘O открывает диалог.
-2. Открыть папку с альбомами → слева дерево, корень раскрыт, справа его содержимое.
-3. Клик по альбому → шапка с обложкой, «N треков · M мин», таблица с тегами.
-4. Двойной клик по треку → играет, в строке иконка динамика, бар показывает трек и прогресс.
-5. «Воспроизвести» с начала, «Перемешать» — случайный порядок, иконка shuffle подсвечена.
-6. Конец альбома при repeat off → стоп на последнем; repeat all → с первого; repeat 1 → тот же.
-7. Prev после 3 сек → с начала; раньше → предыдущий.
-8. Поиск фильтрует таблицу; двойной клик из отфильтрованного — очередь всё равно вся папка.
-9. Перезапуск → та же папка, громкость, shuffle/repeat.
-10. Нечитаемый файл (переименовать .txt в .mp3) → пропускается без алерта.
-11. Control Center показывает трек, медиаклавиши работают.
-12. Пробел с фокусом в таблице или сайдбаре — play/pause; с фокусом в поле поиска — вводит пробел.
-13. Ширина колонок таблицы меняется мышью и сохраняется после перезапуска.
-14. Наведение на строку — серая подсветка; наведение на центр бара — времена и толстая полоса, тянется мышью; наведение на динамик — слайдер громкости.
+<p align="center">
+  Built with AI. More vibe-coded launches at <a href="https://vibecoded.ru">vibecoded.ru</a>.
+</p>
