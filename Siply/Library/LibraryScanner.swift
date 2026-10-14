@@ -17,6 +17,22 @@ enum LibraryScanner {
     }
 
     /// Трек с тегами. Никогда не бросает: что не прочиталось — остаётся фолбэк по имени файла.
+    /// Старые ID3 пишут кириллицу в Windows-1251, а помечают Latin-1 — AVFoundation отдаёт «Êóðþ».
+    /// Перекодируем, только если строка целиком в Latin-1 и больше половины её букв — из À–ÿ:
+    /// так «Beyoncé» остаётся как есть.
+    // ponytail: эвристика по доле букв À–ÿ; короткое «Éé» станет кириллицей — на практике не встречается
+    static func repairTag(_ s: String) -> String {
+        var high = 0, letters = 0
+        for u in s.unicodeScalars {
+            if u.value > 0xFF { return s }
+            if u.value >= 0xC0 { high += 1; letters += 1 } else if u.properties.isAlphabetic { letters += 1 }
+        }
+        guard high * 2 > letters,
+              let bytes = s.data(using: .isoLatin1),
+              let fixed = String(data: bytes, encoding: .windowsCP1251) else { return s }
+        return fixed
+    }
+
     static func loadTrack(_ url: URL) async -> Track {
         var track = Track(url: url)
         let asset = AVURLAsset(url: url)
@@ -28,11 +44,11 @@ enum LibraryScanner {
             for item in items {
                 switch item.commonKey {
                 case .commonKeyTitle?:
-                    if let s = try? await item.load(.stringValue), !s.isEmpty { track.title = s }
+                    if let s = try? await item.load(.stringValue), !s.isEmpty { track.title = repairTag(s) }
                 case .commonKeyArtist?:
-                    track.artist = (try? await item.load(.stringValue)) ?? ""
+                    track.artist = repairTag((try? await item.load(.stringValue)) ?? "")
                 case .commonKeyAlbumName?:
-                    track.album = (try? await item.load(.stringValue)) ?? ""
+                    track.album = repairTag((try? await item.load(.stringValue)) ?? "")
                 case .commonKeyArtwork?:
                     track.artwork = try? await item.load(.dataValue)
                 default:
