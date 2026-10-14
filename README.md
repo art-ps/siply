@@ -54,5 +54,5 @@ Release (sign, notarize, DMG): `scripts/release.sh`.
 ---
 
 <p align="center">
-  Built with AI. More vibe-coded launches at <a href="https://vibecoded.ru">vibecoded.ru</a>.
+  Built with AI. Featured on <a href="https://vibecoded.ru/products/siply">vibecoded.ru</a>.
 </p>

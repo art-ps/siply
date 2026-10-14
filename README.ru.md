@@ -54,5 +54,5 @@ xcodebuild -scheme Siply -configuration Release build
 ---
 
 <p align="center">
-  Собрано с помощью AI. Другие вайбкод-запуски — на <a href="https://vibecoded.ru">vibecoded.ru</a>.
+  Собрано с помощью AI. Карточка проекта на <a href="https://vibecoded.ru/products/siply">vibecoded.ru</a>.
 </p>
