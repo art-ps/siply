@@ -9,6 +9,7 @@ final class FakeAudioEngine: AudioEngine {
     var currentTime: TimeInterval = 0
     var duration: TimeInterval = 100
     var onFinished: (@MainActor () -> Void)?
+    var outputDeviceUID: String?
 
     var loaded: [URL] = []
     var playing = false

@@ -5,11 +5,13 @@ struct SiplyApp: App {
     @State private var library = Library()
     @State private var player: PlayerModel
     private let nowPlaying: NowPlaying
+    private let outputs: OutputDeviceMonitor
 
     init() {
         let player = PlayerModel(engine: AVAudioPlayerEngine())
         _player = State(initialValue: player)
         nowPlaying = NowPlaying(player: player)
+        outputs = OutputDeviceMonitor { player.availableOutputs = $0 }
     }
 
     var body: some Scene {

@@ -26,6 +26,18 @@ final class PlayerModel {
     var repeatMode: RepeatMode {
         didSet { defaults.set(repeatMode.rawValue, forKey: Keys.repeatMode) }
     }
+    /// Выбранное устройство вывода; nil — как в системе. Помнится, даже пока отключено.
+    var output: OutputDevice? {
+        didSet {
+            defaults.set(output?.uid, forKey: Keys.outputUID)
+            defaults.set(output?.name, forKey: Keys.outputName)
+            applyOutput()
+        }
+    }
+    /// Подключённые сейчас устройства вывода — их присылает OutputDeviceMonitor.
+    var availableOutputs: [OutputDevice] = [] {
+        didSet { applyOutput() }
+    }
 
     @ObservationIgnored private let engine: AudioEngine
     @ObservationIgnored private let defaults: UserDefaults
@@ -39,6 +51,8 @@ final class PlayerModel {
         static let volume = "volume"
         static let shuffle = "shuffle"
         static let repeatMode = "repeatMode"
+        static let outputUID = "outputUID"
+        static let outputName = "outputName"
     }
 
     init(engine: AudioEngine, defaults: UserDefaults = .standard) {
@@ -47,8 +61,17 @@ final class PlayerModel {
         volume = defaults.object(forKey: Keys.volume) as? Float ?? 1
         shuffle = defaults.bool(forKey: Keys.shuffle)
         repeatMode = RepeatMode(rawValue: defaults.string(forKey: Keys.repeatMode) ?? "") ?? .off
+        if let uid = defaults.string(forKey: Keys.outputUID) {
+            output = OutputDevice(uid: uid, name: defaults.string(forKey: Keys.outputName) ?? uid)
+        }
         engine.volume = volume
         engine.onFinished = { [weak self] in self?.trackFinished() }
+    }
+
+    /// Выбранное устройство, если оно подключено; иначе системный выход. Музыка не останавливается.
+    private func applyOutput() {
+        let uid = output.flatMap { o in availableOutputs.contains { $0.uid == o.uid } ? o.uid : nil }
+        if engine.outputDeviceUID != uid { engine.outputDeviceUID = uid }
     }
 
     // MARK: - Управление
