@@ -6,7 +6,8 @@
 
 <p align="center">
   A lightweight macOS music player for your folders.<br>
-  Open a folder — listen. No import, no library database.
+  Open a folder — listen. No import, no library database.<br>
+  Siply stands for Simple Player.
 </p>
 
 <p align="center">
