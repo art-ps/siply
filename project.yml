@@ -20,8 +20,8 @@ targets:
       path: Siply/Info.plist
       properties:
         CFBundleDisplayName: Siply
-        CFBundleShortVersionString: "1.1"
-        CFBundleVersion: "3"
+        CFBundleShortVersionString: "1.2"
+        CFBundleVersion: "4"
         LSApplicationCategoryType: public.app-category.music
         NSHumanReadableCopyright: ""
         NSAccentColorName: AccentColor

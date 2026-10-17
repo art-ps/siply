@@ -31,6 +31,7 @@ Music apps want to own your collection: import it, index it, sync it. Siply does
 - **Tags and artwork.** Titles, artists, albums and covers come from file tags. Old Cyrillic ID3 tags in Windows-1251 are shown correctly, not as mojibake.
 - **Apple Music feel.** Album header with Play and Shuffle, track table, floating Liquid Glass player bar on macOS 26.
 - **Choose the output device.** Play Siply through a Bluetooth speaker while system sounds stay on the Mac speakers. If the speaker disconnects, music keeps playing and returns to it on reconnect.
+- **Open from Finder.** Double-click an audio file: its folder opens in Siply and the file starts playing, the rest of the folder plays next. Files Siply can't play are hidden from the list.
 - **Search in folder**, resizable columns that remember their widths.
 - **Keyboard and media keys.** Space plays/pauses, Enter plays the selected track; Control Center and media keys work.
 - **Tiny and native.** Swift + SwiftUI + AVFoundation, zero third-party dependencies.
