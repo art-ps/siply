@@ -24,7 +24,7 @@ struct FolderView: View {
                     if let i = tracks.firstIndex(where: { $0.url == track.url }) {
                         player.play(queue: tracks, startingAt: i)
                     }
-                }, reveal: library.revealURL, onRevealed: { library.revealURL = nil })
+                }, reveal: loading ? nil : library.revealURL, onRevealed: { library.revealURL = nil })
                 .id(folder.url)
             }
         }
