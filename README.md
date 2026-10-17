@@ -40,6 +40,8 @@ Music apps want to own your collection: import it, index it, sync it. Siply does
 1. Download `Siply-x.y.z.dmg` from [Releases](https://github.com/art-ps/siply/releases/latest).
 2. Open it and drag **Siply** to **Applications**.
 
+To open audio files in Siply with a double-click: select a file in Finder → Get Info (⌘I) → Open with → Siply → Change All.
+
 Requires macOS 14 Sonoma or later. Universal build for Apple Silicon and Intel, signed and notarized by Apple.
 
 ## Build from source
