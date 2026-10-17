@@ -13,7 +13,10 @@ struct SiplyApp: App {
                 .environment(delegate.player)
                 // 960 — ниже шапка папки и плеер-бар не помещаются в колонку контента.
                 .frame(minWidth: 960, minHeight: 560)
-                .onAppear { delegate.openMainWindow = { openWindow(id: "main") } }
+                .onAppear {
+                    let open = openWindow
+                    delegate.openMainWindow = { open(id: "main") }
+                }
         }
         .commands {
             AppCommands(library: delegate.library, player: delegate.player)

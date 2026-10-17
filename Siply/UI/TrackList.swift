@@ -7,6 +7,9 @@ struct TrackList: NSViewRepresentable {
     let tracks: [Track]
     let player: PlayerModel
     let play: (Track) -> Void
+    /// Трек, который надо выделить и показать (открыт из Finder); после показа вызывается `onRevealed`.
+    var reveal: URL?
+    var onRevealed: () -> Void = {}
 
     enum Column: String, CaseIterable {
         case title, artist, album, duration
@@ -93,14 +96,17 @@ struct TrackList: NSViewRepresentable {
             table?.refreshHover()
             if let selectedURL, let i = tracks.firstIndex(where: { $0.url == selectedURL }) {
                 table?.selectRowIndexes([i], byExtendingSelection: false)
-            } else if selectedURL == nil, let current = player.currentTrack?.url,
-                      let i = tracks.firstIndex(where: { $0.url == current }) {
-                // Выделения не было, а играющий трек в списке: так кликнутый в Finder файл виден после загрузки папки.
-                table?.selectRowIndexes([i], byExtendingSelection: false)
-                table?.scrollRowToVisible(i)
             } else {
                 table?.deselectAll(nil)
             }
+        }
+        // Файл, открытый из Finder: выделяем и показываем строку, в каком бы порядке ни пришли URL и треки.
+        if let reveal = reveal?.standardizedFileURL,
+           let i = tracks.firstIndex(where: { $0.url.standardizedFileURL == reveal }) {
+            coordinator.table?.selectRowIndexes([i], byExtendingSelection: false)
+            coordinator.table?.scrollRowToVisible(i)
+            let revealed = onRevealed
+            Task { @MainActor in revealed() }
         }
     }
 

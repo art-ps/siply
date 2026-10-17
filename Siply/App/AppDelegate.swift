@@ -21,6 +21,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         super.init()
     }
 
+    /// Окно закрыли — приложение и воспроизведение живут дальше; окно вернёт открытие файла.
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { false }
+
     func application(_ application: NSApplication, open urls: [URL]) {
         // Холодный старт: замыкания ещё нет, окно откроет сама сцена `Window`.
         if !NSApp.windows.contains(where: { $0.isVisible && $0.canBecomeMain }) {

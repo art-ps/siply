@@ -11,5 +11,6 @@ enum FileOpener {
         let target = file.standardizedFileURL
         guard let index = tracks.firstIndex(where: { $0.url.standardizedFileURL == target }) else { return }
         player.play(queue: tracks, startingAt: index)
+        library.revealURL = target
     }
 }

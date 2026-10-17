@@ -28,6 +28,7 @@ final class FileOpenerTests: XCTestCase {
         XCTAssertEqual(player.queue.map { $0.url.lastPathComponent }, ["01 A.wav", "02 B.wav", "03 C.wav"])
         XCTAssertEqual(player.currentTrack?.url.lastPathComponent, "02 B.wav")
         XCTAssertTrue(player.isPlaying)
+        XCTAssertEqual(library.revealURL?.lastPathComponent, "02 B.wav")
     }
 
     func testOpenTakesFirstOfSeveralURLs() async {
@@ -48,6 +49,7 @@ final class FileOpenerTests: XCTestCase {
         await FileOpener.open([dir.url.appendingPathComponent("04 Bad.mp3")], library: library, player: player)
         XCTAssertEqual(library.root?.url, dir.url.standardizedFileURL)
         XCTAssertEqual(player.currentTrack, other)
+        XCTAssertNil(library.revealURL)
         XCTAssertTrue(player.isPlaying)
     }
 

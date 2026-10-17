@@ -19,12 +19,12 @@ struct FolderView: View {
                 ContentUnavailableView("В этой папке нет музыки", systemImage: "music.note")
                     .padding(.bottom, 84)
             } else {
-                TrackList(tracks: Track.filter(tracks, query: search), player: player) { track in
+                TrackList(tracks: Track.filter(tracks, query: search), player: player, play: { track in
                     // Очередь — вся папка в исходном порядке, не отфильтрованная.
                     if let i = tracks.firstIndex(where: { $0.url == track.url }) {
                         player.play(queue: tracks, startingAt: i)
                     }
-                }
+                }, reveal: library.revealURL, onRevealed: { library.revealURL = nil })
                 .id(folder.url)
             }
         }

@@ -7,6 +7,8 @@ import Observation
 final class Library {
     private(set) var root: FolderNode?
     var selection: FolderNode?
+    /// Файл, открытый из Finder: список треков выделит его строку и сбросит значение.
+    var revealURL: URL?
     /// Растёт при rescan — чтобы список треков перечитался даже для той же папки.
     private(set) var generation = 0
 
