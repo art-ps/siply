@@ -27,6 +27,28 @@ final class LibraryTests: XCTestCase {
         XCTAssertEqual(again.selection, again.root)
     }
 
+    func testOpenFolderOfFileSetsRootSelectionAndPersists() {
+        let tmp = TempDir()
+        let file = tmp.file("a.mp3")
+        let lib = Library(defaults: defaults)
+        lib.openFolder(of: file)
+        XCTAssertEqual(lib.root?.url, tmp.url.standardizedFileURL)
+        XCTAssertEqual(lib.selection, lib.root)
+        XCTAssertEqual(Library(defaults: defaults).root?.url, tmp.url.standardizedFileURL)
+    }
+
+    func testOpenFolderOfFileInCurrentRootKeepsTree() {
+        let tmp = TempDir()
+        let lib = Library(defaults: defaults)
+        lib.open(tmp.url)
+        let root = lib.root
+        lib.selection = nil
+        lib.openFolder(of: tmp.file("a.mp3"))
+        XCTAssertTrue(lib.root === root)
+        XCTAssertEqual(lib.selection, root)
+        XCTAssertEqual(lib.generation, 0)
+    }
+
     func testRestoreMissingFolderGivesNoRoot() {
         let tmp = TempDir()
         Library(defaults: defaults).open(tmp.url)

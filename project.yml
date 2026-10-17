@@ -25,6 +25,19 @@ targets:
         LSApplicationCategoryType: public.app-category.music
         NSHumanReadableCopyright: ""
         NSAccentColorName: AccentColor
+        CFBundleDocumentTypes:
+          - CFBundleTypeName: Audio
+            CFBundleTypeRole: Viewer
+            LSHandlerRank: Alternate
+            LSItemContentTypes:
+              - public.mp3
+              - public.mpeg-4-audio
+              - public.aac-audio
+              - org.xiph.flac
+              - com.microsoft.waveform-audio
+              - public.aiff-audio
+              - public.aifc-audio
+              - com.apple.coreaudio-format
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: info.pisarev.siply

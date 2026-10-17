@@ -25,6 +25,16 @@ final class Library {
         defaults.set(try? url.bookmarkData(), forKey: Self.bookmarkKey)
     }
 
+    /// Папка файла становится корнем. Уже корень → дерево не трогаем, только выбираем его.
+    func openFolder(of file: URL) {
+        let folder = file.deletingLastPathComponent()
+        if let root, root.url.standardizedFileURL == folder.standardizedFileURL {
+            selection = root
+        } else {
+            open(folder)
+        }
+    }
+
     /// Пересобирает дерево от корня; выбор остаётся на той же папке.
     func rescan() {
         guard let root else { return }
