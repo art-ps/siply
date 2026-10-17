@@ -88,15 +88,22 @@ enum LibraryScanner {
         return (track, disc)
     }
 
-    /// Все треки папки с тегами, параллельно, отсортированные.
+    /// AVFoundation сыграет файл: контейнер читается и нет DRM. Ошибка загрузки — не играется.
+    static func isPlayable(_ url: URL) async -> Bool {
+        let asset = AVURLAsset(url: url)
+        guard let (playable, protected) = try? await asset.load(.isPlayable, .hasProtectedContent) else { return false }
+        return playable && !protected
+    }
+
+    /// Все играемые треки папки с тегами, параллельно, отсортированные.
     static func tracks(in folder: URL) async -> [Track] {
         let urls = audioFiles(in: folder)
-        let loaded = await withTaskGroup(of: (Int, Track).self) { group in
-            for (i, url) in urls.enumerated() {
-                group.addTask { (i, await loadTrack(url)) }
+        let loaded = await withTaskGroup(of: Track?.self) { group in
+            for url in urls {
+                group.addTask { await isPlayable(url) ? await loadTrack(url) : nil }
             }
-            var out = urls.map(Track.init)
-            for await (i, t) in group { out[i] = t }
+            var out: [Track] = []
+            for await t in group { if let t { out.append(t) } }
             return out
         }
         return Track.sorted(loaded)

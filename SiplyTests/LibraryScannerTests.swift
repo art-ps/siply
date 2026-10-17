@@ -49,6 +49,25 @@ final class LibraryScannerTests: XCTestCase {
         XCTAssertEqual(titles, ["2 Two", "10 Ten", "Zeta"])
     }
 
+    func testTracksSkipUnplayableFiles() async throws {
+        let tmp = TempDir()
+        tmp.file("01 Broken.mp3", Data("not audio".utf8))
+        try AudioFixtures.writeWav(to: tmp.url.appendingPathComponent("02 Good.wav"))
+        let names = await LibraryScanner.tracks(in: tmp.url).map { $0.url.lastPathComponent }
+        XCTAssertEqual(names, ["02 Good.wav"])
+    }
+
+    func testIsPlayable() async throws {
+        let tmp = TempDir()
+        let bad = tmp.file("x.mp3", Data("not audio".utf8))
+        let good = tmp.url.appendingPathComponent("y.wav")
+        try AudioFixtures.writeWav(to: good)
+        let badOK = await LibraryScanner.isPlayable(bad)
+        let goodOK = await LibraryScanner.isPlayable(good)
+        XCTAssertFalse(badOK)
+        XCTAssertTrue(goodOK)
+    }
+
     func testFolderArtworkPrefersTrackArtworkThenCoverFile() {
         let tmp = TempDir()
         let cover = Data([0xFF, 0xD8, 0xFF])
