@@ -2,28 +2,21 @@ import SwiftUI
 
 @main
 struct SiplyApp: App {
-    @State private var library = Library()
-    @State private var player: PlayerModel
-    private let nowPlaying: NowPlaying
-    private let outputs: OutputDeviceMonitor
-
-    init() {
-        let player = PlayerModel(engine: AVAudioPlayerEngine())
-        _player = State(initialValue: player)
-        nowPlaying = NowPlaying(player: player)
-        outputs = OutputDeviceMonitor { player.availableOutputs = $0 }
-    }
+    @NSApplicationDelegateAdaptor(AppDelegate.self) private var delegate
+    @Environment(\.openWindow) private var openWindow
 
     var body: some Scene {
-        WindowGroup {
+        // Единственное окно: открытие файла из Finder не должно плодить второе.
+        Window("Siply", id: "main") {
             ContentView()
-                .environment(library)
-                .environment(player)
+                .environment(delegate.library)
+                .environment(delegate.player)
                 // 960 — ниже шапка папки и плеер-бар не помещаются в колонку контента.
                 .frame(minWidth: 960, minHeight: 560)
+                .onAppear { delegate.openMainWindow = { openWindow(id: "main") } }
         }
         .commands {
-            AppCommands(library: library, player: player)
+            AppCommands(library: delegate.library, player: delegate.player)
         }
     }
 }

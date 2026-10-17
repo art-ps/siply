@@ -93,6 +93,11 @@ struct TrackList: NSViewRepresentable {
             table?.refreshHover()
             if let selectedURL, let i = tracks.firstIndex(where: { $0.url == selectedURL }) {
                 table?.selectRowIndexes([i], byExtendingSelection: false)
+            } else if selectedURL == nil, let current = player.currentTrack?.url,
+                      let i = tracks.firstIndex(where: { $0.url == current }) {
+                // Выделения не было, а играющий трек в списке: так кликнутый в Finder файл виден после загрузки папки.
+                table?.selectRowIndexes([i], byExtendingSelection: false)
+                table?.scrollRowToVisible(i)
             } else {
                 table?.deselectAll(nil)
             }
