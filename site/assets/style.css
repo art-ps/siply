@@ -13,7 +13,6 @@
   --off: light-dark(#c9c1b1, #5a5244);
 }
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
 body {
   margin: 0; background: var(--bg); color: var(--ink);
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, sans-serif;
@@ -29,7 +28,7 @@ header { display: flex; justify-content: space-between; align-items: center; fle
 .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 16px; text-decoration: none; }
 .brand img { width: 28px; height: 28px; border-radius: 7px; }
 .brand .tag { font-weight: 400; color: var(--faint); }
-header nav { display: flex; gap: 28px; font-size: 14px; color: var(--soft); }
+header nav { display: flex; gap: 28px; font-size: 14px; color: light-dark(#6d655a, #a69d8c); }
 header nav a { text-decoration: none; }
 
 .hero { padding: 72px 56px 48px; display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 56px; align-items: center; }
@@ -75,7 +74,7 @@ h2 { margin-bottom: 28px; font-size: 38px; letter-spacing: -.025em; font-weight:
 .out { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-radius: 10px; background: var(--card); }
 .out > span:first-child { display: flex; flex-direction: column; }
 .out b { font-weight: 600; }
-.out small { font-size: 13px; color: var(--soft); }
+.out small { color: var(--soft); }
 .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
 .dot.off { background: var(--off); }
 .art-open { flex-direction: row; align-items: center; justify-content: center; gap: 16px; }
