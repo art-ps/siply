@@ -12,7 +12,7 @@
 
 <p align="center">
   <a href="https://github.com/art-ps/siply/releases/latest"><b>Download for macOS</b></a> ·
-  <a href="https://art-ps.github.io/siply/en/">Website</a> ·
+  <a href="https://siply.top/en/">Website</a> ·
   <a href="README.ru.md">Русский</a>
 </p>
 
