@@ -29,17 +29,36 @@ fi
 VER="${BASH_REMATCH[1]}"
 
 # Размер в МБ (bytes/1048576), один знак после запятой
-SIZE_EN="$(stat -f%z "$DMG" | awk '{printf "%.1f", $1 / 1048576}')"
+SIZE_EN="$(stat -f%z "$DMG" | LC_ALL=C awk '{printf "%.1f", $1 / 1048576}')"
 SIZE_RU="${SIZE_EN/./,}"
 
 HREF="https://github.com/art-ps/siply/releases/download/v$VER/$NAME"
 
+# Ровно по одному #download и #release в каждой странице
+for f in "$RU" "$EN"; do
+  for id in download release; do
+    [ "$(grep -c "id=\"$id\"" "$f")" -eq 1 ] || { echo "Ошибка: шаблон не совпал в $f" >&2; exit 1; }
+  done
+done
+
+TEXT_RU="Версия $VER · $SIZE_RU МБ"
+TEXT_EN="Version $VER · $SIZE_EN MB"
+
 # BSD sed (macOS)
 sed -E -i '' \
   -e "s#(id=\"download\"[^>]*href=\")[^\"]*(\")#\1$HREF\2#" \
-  -e "s#(id=\"release\">)[^<]*(<)#\1Версия $VER · $SIZE_RU МБ\2#" "$RU"
+  -e "s#(id=\"release\">)[^<]*(<)#\1$TEXT_RU\2#" "$RU"
 sed -E -i '' \
   -e "s#(id=\"download\"[^>]*href=\")[^\"]*(\")#\1$HREF\2#" \
-  -e "s#(id=\"release\">)[^<]*(<)#\1Version $VER · $SIZE_EN MB\2#" "$EN"
+  -e "s#(id=\"release\">)[^<]*(<)#\1$TEXT_EN\2#" "$EN"
+
+# sed молча ничего не делает при несовпадении — проверяем результат
+for pair in "$RU|$TEXT_RU" "$EN|$TEXT_EN"; do
+  f="${pair%%|*}"; t="${pair#*|}"
+  if ! grep -qF "href=\"$HREF\"" "$f" || ! grep -qF "id=\"release\">$t<" "$f"; then
+    echo "Ошибка: шаблон не совпал в $f" >&2
+    exit 1
+  fi
+done
 
 echo "Сайт: v$VER, ${SIZE_RU} МБ"

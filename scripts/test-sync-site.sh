@@ -28,4 +28,24 @@ diff -r "$TMP/after1" "$SITE_DIR" >/dev/null || fail "не идемпотент�
 cp "$TMP/Siply-9.9.9.dmg" "$TMP/foo.dmg"
 if "$ROOT/scripts/sync-site.sh" "$TMP/foo.dmg" 2>/dev/null; then fail "foo.dmg принят"; fi
 
+# Шаблон не совпал (нет #release / #download) -> ненулевой код
+for id in release download; do
+  for page in index.html en/index.html; do
+    rm -rf "$TMP/neg"; cp -R "$ROOT/site" "$TMP/neg"
+    sed -i '' "s/id=\"$id\"/id=\"x$id\"/" "$TMP/neg/$page"
+    if SITE_DIR="$TMP/neg" "$ROOT/scripts/sync-site.sh" "$TMP/Siply-9.9.9.dmg" 2>/dev/null; then
+      fail "не упал без id=$id в $page"
+    fi
+  done
+done
+
+# Идемпотентность на нетронутом site/ с DMG того же размера, что настоящий
+REAL="$ROOT/build/release/Siply-1.2.1.dmg"
+if [ -f "$REAL" ]; then
+  head -c "$(stat -f%z "$REAL")" /dev/zero > "$TMP/Siply-1.2.1.dmg"
+  rm -rf "$TMP/real"; cp -R "$ROOT/site" "$TMP/real"
+  SITE_DIR="$TMP/real" "$ROOT/scripts/sync-site.sh" "$TMP/Siply-1.2.1.dmg" >/dev/null
+  diff -r "$ROOT/site" "$TMP/real" >/dev/null || fail "реальный site/ изменился"
+fi
+
 echo OK
