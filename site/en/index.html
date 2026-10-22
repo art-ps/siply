@@ -9,47 +9,83 @@
 <meta property="og:description" content="A lightweight native macOS player: open a folder and listen. No import, no library database.">
 <meta property="og:image" content="https://art-ps.github.io/siply/assets/screenshot.png">
 <link rel="icon" href="../assets/icon.png">
-<link rel="alternate" hreflang="ru" href="https://art-ps.github.io/siply/">
+<link rel="alternate" hreflang="en" href="https://art-ps.github.io/siply/">
 <link rel="alternate" hreflang="en" href="https://art-ps.github.io/siply/en/">
 <link rel="stylesheet" href="../assets/style.css">
-<script defer src="https://stats.pisarev.me/script.js" data-website-id="2cc290f0-0ac6-487a-86b3-a697a581ee98"></script> </head>
+<script defer src="https://stats.pisarev.me/script.js" data-website-id="2cc290f0-0ac6-487a-86b3-a697a581ee98"></script>
+</head>
 <body>
-<div class="wrap">
-<nav>
-  <a class="brand" href="./"><img src="../assets/icon.png" alt="">Siply</a>
-  <a class="lang" href="../" hreflang="ru">Русский</a>
-</nav>
-<main>
-<section class="hero">
-  <img class="icon" src="../assets/icon.png" alt="Siply icon">
-  <h1>Siply</h1>
-  <p class="lead">A lightweight macOS music player that plays straight from your folders. Open a folder and listen — no import, no library database. Siply stands for Simple Player.</p>
-  <a class="btn" id="download" data-umami-event="download" href="https://github.com/art-ps/siply/releases/latest">Download for macOS</a>
-  <p class="release" id="release"></p>
-  <p class="meta">macOS 14+ · Apple Silicon and Intel · notarized by Apple</p>
-</section>
-<figure class="shot"><img src="../assets/screenshot.png" width="1600" height="1087" alt="Siply window: folder tree on the left, tracks with artwork on the right, floating player bar at the bottom"></figure>
-<h2>Features</h2>
-<div class="grid">
-  <div class="card"><h3>Folders are the library</h3><p>The sidebar mirrors your folder tree, the main pane lists the selected folder's tracks. Nothing is imported or indexed.</p></div>
-  <div class="card"><h3>Native formats</h3><p>MP3, AAC/M4A, FLAC, WAV, AIFF and CAF — everything macOS plays, lossless included.</p></div>
-  <div class="card"><h3>Tags and artwork</h3><p>Titles, artists, albums and covers from file tags. Legacy Windows-1251 ID3 tags show up as proper Cyrillic.</p></div>
-  <div class="card"><h3>Apple Music feel</h3><p>Album header with Play and Shuffle, a clean track table, a floating Liquid Glass player bar.</p></div>
-  <div class="card"><h3>Your own output device</h3><p>Music to a Bluetooth speaker, system sounds on the Mac speakers. Speaker disconnects — music keeps playing and moves back on reconnect.</p></div>
-  <div class="card"><h3>Open from Finder</h3><p>Double-click an audio file — its folder opens in Siply and the file plays, the rest of the folder follows.</p></div>
-  <div class="card"><h3>Keyboard and media keys</h3><p>Space pauses, Enter plays a track. Media keys and Control Center just work.</p></div>
-  <div class="card"><h3>Tiny and native</h3><p>Swift, SwiftUI and AVFoundation. Zero third-party dependencies.</p></div>
+<div class="page">
+<div class="in">
+  <header>
+    <a class="brand" href="./"><img src="../assets/icon.png" alt=""><span>Siply</span><span class="tag">Simple Player</span></a>
+    <nav><a href="#features">Features</a><a href="#install">Install</a><a href="https://github.com/art-ps/siply">GitHub</a><a href="../" hreflang="ru">Русский</a></nav>
+  </header>
+  <main>
+  <section class="hero">
+    <div class="hero-text">
+      <h1>A lightweight macOS music player that plays straight from your folders</h1>
+      <p class="sub">Open a folder and listen — no import, no library. Siply stands for Simple Player.</p>
+      <div class="dl">
+        <a class="btn" id="download" data-umami-event="download" href="https://github.com/art-ps/siply/releases/download/v1.2.1/Siply-1.2.1.dmg">Download for macOS</a>
+        <span class="note" id="release">Version 1.2.1 · 0.8 MB</span>
+        <span class="note">macOS 14+ · Apple Silicon and Intel · notarized by Apple</span>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="shot"><img src="../assets/screenshot.png" width="2000" height="1423" alt="Siply window: folder tree on the left, tracks with artwork on the right, floating player bar at the bottom"></div>
+      <div class="tree" aria-hidden="true">
+        <span class="root"><span class="folder"></span>My collection</span>
+        <span class="sub-item">2026</span><span class="sub-item">Loseless</span><span class="sub-item">Me — Ibiza 2000</span><span class="sel">Friday (soundtrack)</span>
+      </div>
+    </div>
+  </section>
+  <section id="features">
+    <h2>Features</h2>
+    <div class="big">
+      <div class="card">
+        <div class="art art-tree" aria-hidden="true">
+          <span class="root"><span class="folder"></span>My collection</span>
+          <span class="sub-item">!!!! From iPhone</span><span class="sub-item">2026</span><span class="sub-item">Immediate music</span><span class="sub-item">Loseless</span><span class="sel">Me — Ibiza 2000</span><span class="sub-item">TroyBoi</span>
+        </div>
+        <div class="body"><h3>Folders instead of a library</h3><p>Folder tree on the left, tracks on the right. Nothing is imported or indexed.</p></div>
+      </div>
+      <div class="card">
+        <div class="art art-out" aria-hidden="true">
+          <div class="out"><span><b>Music</b><small>Bluetooth speaker</small></span><span class="dot"></span></div>
+          <div class="out"><span><b>System sounds</b><small>MacBook speakers</small></span><span class="dot off"></span></div>
+        </div>
+        <div class="body"><h3>Music to the speaker, system sounds to the Mac</h3><p>Its own output device, for music only. If the speaker disconnects, Siply keeps playing and moves back when it returns.</p></div>
+      </div>
+      <div class="card">
+        <div class="art art-open" aria-hidden="true">
+          <figure><span class="file"></span><figcaption>Friday.flac</figcaption></figure>
+          <span class="arrow">→</span>
+          <figure><img src="../assets/icon.png" alt=""><figcaption>Plays in Siply</figcaption></figure>
+        </div>
+        <div class="body"><h3>Opens from Finder</h3><p>Double-click an audio file: its folder opens in Siply, the track plays, the rest follow.</p></div>
+      </div>
+    </div>
+    <div class="small">
+      <div class="mini"><h3>Everything macOS plays</h3><p>MP3, AAC/M4A, FLAC, WAV, AIFF and CAF — lossless included.</p></div>
+      <div class="mini"><h3>Tags and artwork</h3><p>Titles, artists, albums and covers come from file tags. Legacy Windows-1251 ID3 tags show up as proper Cyrillic.</p></div>
+      <div class="mini"><h3>A familiar interface</h3><p>Album header with Play and Shuffle, a track table, a Liquid Glass player bar — like Apple Music.</p></div>
+      <div class="mini"><h3>Keyboard and media keys</h3><p>Space pauses, Enter plays. Media keys and Control Center work.</p></div>
+      <div class="mini"><h3>Small and native</h3><p>Swift, SwiftUI and AVFoundation. Zero third-party dependencies.</p></div>
+    </div>
+  </section>
+  <section id="install">
+    <h2>Install</h2>
+    <ol class="steps">
+      <li><span class="n">1</span><span>Download Siply-x.y.z.dmg from the GitHub releases page.</span></li>
+      <li><span class="n">2</span><span>Open the disk image and drag Siply to Applications.</span></li>
+      <li><span class="n">3</span><span>Launch Siply and pick your music folder.</span></li>
+      <li><span class="n">4</span><span>Want to open files with a double-click? In Finder: file → Get Info (⌘I) → Open with → Siply → Change All.</span></li>
+    </ol>
+  </section>
+  </main>
+  <footer><span>Built with AI</span><span class="links"><a href="https://vibecoded.ru/products/siply">project page on vibecoded.ru</a><a href="https://github.com/art-ps/siply">GitHub</a></span></footer>
 </div>
-<h2>Install</h2>
-<ol class="steps">
-  <li>Download <code>Siply-x.y.z.dmg</code> from <a href="https://github.com/art-ps/siply/releases/latest">GitHub Releases</a>.</li>
-  <li>Open it and drag Siply to Applications.</li>
-  <li>Launch Siply and pick your music folder.</li>
-  <li>To open audio files in Siply with a double-click: select a file in Finder → Get Info (⌘I) → Open with → Siply → Change All.</li>
-</ol>
-</main>
 </div>
-<footer>Built with AI · featured on <a href="https://vibecoded.ru/products/siply">vibecoded.ru</a> · <a href="https://github.com/art-ps/siply">GitHub</a></footer>
-<script src="../assets/release.js" defer></script>
 </body>
 </html>
