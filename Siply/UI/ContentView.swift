@@ -19,6 +19,7 @@ struct ContentView: View {
                         }
                     }
                     .overlay(alignment: .bottom) { PlayerBar() }
+                    .toolbar { ProjectLinkToolbarItem() }
                 }
             } else {
                 EmptyStateView(open: library.openFolderPanel)
@@ -28,6 +29,18 @@ struct ContentView: View {
         .onKeyPress(.space) {
             player.togglePlayPause()
             return .handled
+        }
+    }
+}
+
+/// Подпись проекта справа. На macOS 26+ без общей стеклянной подложки.
+private struct ProjectLinkToolbarItem: ToolbarContent {
+    var body: some ToolbarContent {
+        if #available(macOS 26, *) {
+            ToolbarItem(placement: .primaryAction) { ProjectLink() }
+                .sharedBackgroundVisibility(.hidden)
+        } else {
+            ToolbarItem(placement: .primaryAction) { ProjectLink() }
         }
     }
 }
