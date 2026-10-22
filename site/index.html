@@ -12,44 +12,80 @@
 <link rel="alternate" hreflang="ru" href="https://art-ps.github.io/siply/">
 <link rel="alternate" hreflang="en" href="https://art-ps.github.io/siply/en/">
 <link rel="stylesheet" href="assets/style.css">
-<script defer src="https://stats.pisarev.me/script.js" data-website-id="2cc290f0-0ac6-487a-86b3-a697a581ee98"></script> </head>
+<script defer src="https://stats.pisarev.me/script.js" data-website-id="2cc290f0-0ac6-487a-86b3-a697a581ee98"></script>
+</head>
 <body>
-<div class="wrap">
-<nav>
-  <a class="brand" href="./"><img src="assets/icon.png" alt="">Siply</a>
-  <a class="lang" href="en/" hreflang="en">English</a>
-</nav>
-<main>
-<section class="hero">
-  <img class="icon" src="assets/icon.png" alt="Иконка Siply">
-  <h1>Siply</h1>
-  <p class="lead">Лёгкий музыкальный плеер для macOS, который играет прямо из папок. Открыл папку — слушаешь, без импорта и медиатеки. Siply — сокращение от Simple Player.</p>
-  <a class="btn" id="download" data-umami-event="download" href="https://github.com/art-ps/siply/releases/latest">Скачать для macOS</a>
-  <p class="release" id="release"></p>
-  <p class="meta">macOS 14+ · Apple Silicon и Intel · нотаризовано Apple</p>
-</section>
-<figure class="shot"><img src="assets/screenshot.png" width="1600" height="1087" alt="Окно Siply: дерево папок слева, треки с обложками справа, плавающая панель плеера внизу"></figure>
-<h2>Что умеет</h2>
-<div class="grid">
-  <div class="card"><h3>Папки вместо медиатеки</h3><p>Слева дерево папок, справа треки выбранной папки. Ничего не импортируется и не индексируется.</p></div>
-  <div class="card"><h3>Родные форматы</h3><p>MP3, AAC/M4A, FLAC, WAV, AIFF и CAF — всё, что играет macOS, включая lossless.</p></div>
-  <div class="card"><h3>Теги и обложки</h3><p>Названия, артисты, альбомы и обложки из тегов. Старые ID3 в Windows-1251 читаются кириллицей.</p></div>
-  <div class="card"><h3>Как в Apple Music</h3><p>Шапка альбома с кнопками «Воспроизвести» и «Перемешать», таблица треков, панель плеера с Liquid Glass.</p></div>
-  <div class="card"><h3>Своё устройство вывода</h3><p>Музыка — в Bluetooth-колонку, системные звуки — на динамики Mac. Колонка отключилась — играет дальше и вернётся на неё сама.</p></div>
-  <div class="card"><h3>Открытие из Finder</h3><p>Двойной клик по аудиофайлу — его папка открывается в Siply и файл играет, за ним остальные треки папки.</p></div>
-  <div class="card"><h3>Клавиатура и медиаклавиши</h3><p>Пробел — пауза, Enter — играть трек. Работают медиаклавиши и Пункт управления.</p></div>
-  <div class="card"><h3>Маленький и нативный</h3><p>Swift, SwiftUI и AVFoundation. Ни одной сторонней зависимости.</p></div>
+<div class="page">
+<div class="in">
+  <header>
+    <a class="brand" href="./"><img src="assets/icon.png" alt=""><span>Siply</span><span class="tag">Simple Player</span></a>
+    <nav><a href="#features">Возможности</a><a href="#install">Установка</a><a href="https://github.com/art-ps/siply">GitHub</a><a href="en/" hreflang="en">English</a></nav>
+  </header>
+  <main>
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Лёгкий музыкальный плеер для macOS, который играет прямо из папок</h1>
+      <p class="sub">Открыл папку — слушаешь, без импорта и медиатеки. Siply — сокращение от Simple Player.</p>
+      <div class="dl">
+        <a class="btn" id="download" data-umami-event="download" href="https://github.com/art-ps/siply/releases/download/v1.2.1/Siply-1.2.1.dmg">Скачать для macOS</a>
+        <span class="note" id="release">Версия 1.2.1 · 0,8 МБ</span>
+        <span class="note">macOS 14+ · Apple Silicon и Intel · нотаризовано Apple</span>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="shot"><img src="assets/screenshot.png" width="2000" height="1423" alt="Окно Siply: дерево папок слева, треки с обложками справа, плавающая панель плеера внизу"></div>
+      <div class="tree" aria-hidden="true">
+        <span class="root"><span class="folder"></span>My collection</span>
+        <span class="sub-item">2026</span><span class="sub-item">Loseless</span><span class="sub-item">Me — Ibiza 2000</span><span class="sel">Friday (soundtrack)</span>
+      </div>
+    </div>
+  </section>
+  <section id="features">
+    <h2>Что умеет</h2>
+    <div class="big">
+      <div class="card">
+        <div class="art art-tree" aria-hidden="true">
+          <span class="root"><span class="folder"></span>My collection</span>
+          <span class="sub-item">!!!! From iPhone</span><span class="sub-item">2026</span><span class="sub-item">Immediate music</span><span class="sub-item">Loseless</span><span class="sel">Me — Ibiza 2000</span><span class="sub-item">TroyBoi</span>
+        </div>
+        <div class="body"><h3>Папки вместо медиатеки</h3><p>Слева дерево папок, справа треки. Ничего не импортируется и не индексируется.</p></div>
+      </div>
+      <div class="card">
+        <div class="art art-out" aria-hidden="true">
+          <div class="out"><span><b>Музыка</b><small>Bluetooth-колонка</small></span><span class="dot"></span></div>
+          <div class="out"><span><b>Системные звуки</b><small>Динамики MacBook</small></span><span class="dot off"></span></div>
+        </div>
+        <div class="body"><h3>Музыка — в колонку, звуки системы — в Mac</h3><p>Своё устройство вывода только для музыки. Колонка отключилась — Siply продолжит играть и сам вернётся на неё.</p></div>
+      </div>
+      <div class="card">
+        <div class="art art-open" aria-hidden="true">
+          <figure><span class="file"></span><figcaption>Friday.flac</figcaption></figure>
+          <span class="arrow">→</span>
+          <figure><img src="assets/icon.png" alt=""><figcaption>Играет в Siply</figcaption></figure>
+        </div>
+        <div class="body"><h3>Открывается из Finder</h3><p>Двойной клик по аудиофайлу: папка открывается в Siply, трек играет, за ним — остальные.</p></div>
+      </div>
+    </div>
+    <div class="small">
+      <div class="mini"><h3>Всё, что играет macOS</h3><p>MP3, AAC/M4A, FLAC, WAV, AIFF и CAF — включая lossless.</p></div>
+      <div class="mini"><h3>Теги и обложки</h3><p>Названия, артисты, альбомы и обложки берутся из тегов. Кириллица в старых ID3 (Windows-1251) читается правильно.</p></div>
+      <div class="mini"><h3>Знакомый интерфейс</h3><p>Шапка альбома, «Воспроизвести» и «Перемешать», таблица треков, панель плеера с Liquid Glass — как в Apple Music.</p></div>
+      <div class="mini"><h3>Клавиатура и медиаклавиши</h3><p>Пробел — пауза, Enter — играть. Работают медиаклавиши и Пункт управления.</p></div>
+      <div class="mini"><h3>Маленький и нативный</h3><p>Swift, SwiftUI и AVFoundation. Ни одной сторонней зависимости.</p></div>
+    </div>
+  </section>
+  <section id="install">
+    <h2>Установка</h2>
+    <ol class="steps">
+      <li><span class="n">1</span><span>Скачайте Siply-x.y.z.dmg со страницы релизов на GitHub.</span></li>
+      <li><span class="n">2</span><span>Откройте образ и перетащите Siply в «Программы».</span></li>
+      <li><span class="n">3</span><span>Запустите Siply и выберите папку с музыкой.</span></li>
+      <li><span class="n">4</span><span>Хотите открывать файлы двойным кликом? В Finder: файл → «Свойства» (⌘I) → «Открыть в программе» → Siply → «Изменить всё».</span></li>
+    </ol>
+  </section>
+  </main>
+  <footer><span>Собрано с помощью AI</span><span class="links"><a href="https://vibecoded.ru/products/siply">карточка проекта на vibecoded.ru</a><a href="https://github.com/art-ps/siply">GitHub</a></span></footer>
 </div>
-<h2>Установка</h2>
-<ol class="steps">
-  <li>Скачайте <code>Siply-x.y.z.dmg</code> в <a href="https://github.com/art-ps/siply/releases/latest">релизах на GitHub</a>.</li>
-  <li>Откройте образ и перетащите Siply в «Программы».</li>
-  <li>Запустите Siply и выберите папку с музыкой.</li>
-  <li>Чтобы аудиофайлы открывались в Siply двойным кликом: в Finder выберите файл → «Свойства» (⌘I) → «Открыть в программе» → Siply → «Изменить всё».</li>
-</ol>
-</main>
 </div>
-<footer>Собрано с помощью AI · карточка проекта на <a href="https://vibecoded.ru/products/siply">vibecoded.ru</a> · <a href="https://github.com/art-ps/siply">GitHub</a></footer>
-<script src="assets/release.js" defer></script>
 </body>
 </html>
