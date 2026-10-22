@@ -19,6 +19,13 @@ grep -q "id=\"download\"[^>]*$HREF\"" "$SITE_DIR/en/index.html" || fail "href en
 grep -q '>Версия 9.9.9 · 2,0 МБ<' "$SITE_DIR/index.html" || fail "строка ru"
 grep -q '>Version 9.9.9 · 2.0 MB<' "$SITE_DIR/en/index.html" || fail "строка en"
 
+# Версия X.Y
+dd if=/dev/zero of="$TMP/Siply-9.9.dmg" bs=1048576 count=2 2>/dev/null
+"$ROOT/scripts/sync-site.sh" "$TMP/Siply-9.9.dmg" >/dev/null
+grep -q 'releases/download/v9.9/Siply-9.9.dmg"' "$SITE_DIR/index.html" || fail "href X.Y"
+grep -q '>Версия 9.9 · 2,0 МБ<' "$SITE_DIR/index.html" || fail "строка X.Y"
+"$ROOT/scripts/sync-site.sh" "$TMP/Siply-9.9.9.dmg" >/dev/null
+
 # Идемпотентность
 cp -R "$SITE_DIR" "$TMP/after1"
 "$ROOT/scripts/sync-site.sh" "$TMP/Siply-9.9.9.dmg" >/dev/null

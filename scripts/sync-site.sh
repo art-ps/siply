@@ -13,16 +13,17 @@ EN="$SITE_DIR/en/index.html"
 if [ $# -eq 0 ]; then
   for f in "$RU" "$EN"; do
     echo "$f"
-    grep -oE 'href="[^"]*releases/download/[^"]*"' "$f"
-    grep -E 'id="release"' "$f" | sed -E 's/^ +//'
+    grep -oE 'href="[^"]*releases/download/[^"]*"' "$f" || echo "(не найдено)"
+    grep -E 'id="release"' "$f" | sed -E 's/^ +//' || true
+    grep -qE 'id="release"' "$f" || echo "(не найдено)"
   done
   exit 0
 fi
 
 DMG="$1"
 NAME="$(basename "$DMG")"
-if ! [[ "$NAME" =~ ^Siply-([0-9]+\.[0-9]+\.[0-9]+)\.dmg$ ]]; then
-  echo "Ошибка: имя файла должно быть Siply-X.Y.Z.dmg, получено: $NAME" >&2
+if ! [[ "$NAME" =~ ^Siply-([0-9]+(\.[0-9]+){1,2})\.dmg$ ]]; then
+  echo "Ошибка: имя файла должно быть Siply-X.Y[.Z].dmg, получено: $NAME" >&2
   exit 1
 fi
 [ -f "$DMG" ] || { echo "Ошибка: нет файла $DMG" >&2; exit 1; }
