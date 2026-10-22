@@ -37,3 +37,7 @@
 ## Правка 2026-10-22: шаг 1 установки
 
 Шаг 1 на сайте — «Скачайте Siply кнопкой выше.» (en: «Download Siply with the button above.»), простой текст без ссылки (кнопка — единственное место со ссылкой на DMG, её обновляет `sync-site.sh`). README не меняется: там кнопки нет.
+
+## Правка 2026-10-22: домен siply.top
+
+Сайт переехал на https://siply.top/ (Pages custom domain задан в настройках репозитория, файл `CNAME` не нужен — деплой через Actions). Все абсолютные `https://art-ps.github.io/siply/…` → `https://siply.top/…`: `og:image`, `hreflang` в `site/index.html` и `site/en/index.html`, ссылка «Сайт/Website» в `README.ru.md`/`README.md` (en → `https://siply.top/en/`). Проверка: `grep -rn "art-ps.github.io" site README*.md` пусто; после деплоя `curl -sI https://siply.top/` → 200, `https://art-ps.github.io/siply/` → 301 на siply.top.
