@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://siply.top/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://siply.top/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://siply.top/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://siply.top/"/>
+  </url>
+  <url>
+    <loc>https://siply.top/en/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://siply.top/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://siply.top/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://siply.top/"/>
+  </url>
+</urlset>
