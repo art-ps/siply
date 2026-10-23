@@ -62,6 +62,7 @@ h1 { font-size: clamp(40px, 5vw, 58px); line-height: 1.04; letter-spacing: -.03e
 
 #features { padding: 80px 56px 24px; }
 #install { padding: 72px 56px 88px; }
+#faq { padding: 0 56px 88px; }
 h2 { margin-bottom: 28px; font-size: 38px; letter-spacing: -.025em; font-weight: 700; }
 .big, .small { display: grid; gap: 12px; }
 .big { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-bottom: 12px; }
@@ -97,7 +98,7 @@ footer { padding: 22px 56px; border-top: 1px solid var(--line); display: flex; j
 footer .links { display: flex; gap: 18px; }
 
 @media (max-width: 720px) {
-  header, .hero, #features, #install, footer { padding-left: 20px; padding-right: 20px; }
+  header, .hero, #features, #install, #faq, footer { padding-left: 20px; padding-right: 20px; }
   header nav { gap: 18px; flex-wrap: wrap; }
   .hero { grid-template-columns: 1fr; gap: 32px; padding-top: 40px; padding-bottom: 32px; }
   .hero-art { height: auto; }
@@ -106,6 +107,7 @@ footer .links { display: flex; gap: 18px; }
   .tree { display: none; }
   #features { padding-top: 56px; }
   #install { padding-top: 56px; padding-bottom: 64px; }
+  #faq { padding-bottom: 64px; }
   h2 { font-size: 32px; }
   .big, .small, .steps { grid-template-columns: 1fr; }
 }

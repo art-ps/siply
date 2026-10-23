@@ -56,6 +56,10 @@ xcodebuild -scheme Siply -configuration Release build
 Тесты: `xcodebuild test -scheme Siply -destination 'platform=macOS'`.
 Релиз (подпись, нотаризация, DMG): `scripts/release.sh`, затем `scripts/sync-site.sh build/release/Siply-X.Y.Z.dmg` и закоммитить `site/`.
 
+## Лицензия
+
+MIT. См. [LICENSE](LICENSE).
+
 ---
 
 <p align="center">
