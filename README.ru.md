@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-  <img src="site/assets/screenshot.png" alt="Окно Siply: дерево папок слева, треки с обложками справа, плавающая панель плеера">
+  <img src="site/assets/screenshot.jpg" alt="Окно Siply: дерево папок слева, треки с обложками справа, плавающая панель плеера">
 </p>
 
 ## Зачем

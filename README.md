@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-  <img src="site/assets/screenshot.png" alt="Siply window: folder tree on the left, tracks with artwork on the right, floating player bar">
+  <img src="site/assets/screenshot.jpg" alt="Siply window: folder tree on the left, tracks with artwork on the right, floating player bar">
 </p>
 
 ## Why
