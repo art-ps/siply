@@ -34,21 +34,22 @@
 
 ### 4. Видимые тексты
 
-- Мета-строка под кнопкой: ru `Бесплатно, открытый код · macOS 14+ · Apple Silicon и Intel · нотаризовано Apple`; en `Free and open source · macOS 14+ · Apple Silicon and Intel · notarized by Apple`.
+- Мета-строка под кнопкой: ru `Бесплатно, открытый код · macOS 14+ · Apple Silicon и Intel`; en `Free and open source · macOS 14+ · Apple Silicon and Intel`.
 - Блок «Вопросы» / «Questions» после «Установка», до футера: `<section id="faq">`, `h2`, 4 пары `h3` + `p`, вёрстка из существующих стилей карточек (как `.mini`). Без FAQPage-разметки.
   - ru:
     1. «Siply бесплатный?» — «Да. Siply бесплатный и с открытым кодом под лицензией MIT. Исходники и все версии лежат на GitHub.»
     2. «Какие форматы он играет?» — «Всё, что играет сама macOS: MP3, AAC/M4A, FLAC, WAV, AIFF и CAF, включая lossless. OGG и APE не поддерживаются.»
     3. «Нужна ли медиатека?» — «Нет. Siply читает папки как есть и ничего не импортирует и не индексирует. Открыли папку — слушаете.»
-    4. «Какой нужен Mac?» — «macOS 14 или новее, Apple Silicon или Intel. Сборка подписана и нотаризована Apple.»
+    4. «Какой нужен Mac?» — «macOS 14 или новее, Apple Silicon или Intel.»
   - en:
     1. «Is Siply free?» — «Yes. Siply is free and open source under the MIT license. The source and every release are on GitHub.»
     2. «Which formats does it play?» — «Everything macOS plays: MP3, AAC/M4A, FLAC, WAV, AIFF and CAF, lossless included. OGG and APE are not supported.»
     3. «Do I need a library?» — «No. Siply reads your folders as they are, with no import and no indexing. Open a folder and listen.»
-    4. «Which Mac do I need?» — «macOS 14 or later, Apple Silicon or Intel. The build is signed and notarized by Apple.»
+    4. «Which Mac do I need?» — «macOS 14 or later, Apple Silicon or Intel.»
   - Ссылка «на GitHub» / «on GitHub» в ответе 1 → `https://github.com/art-ps/siply`.
 - Футер: в начало `Автор — Артём Писарев` / `By Artem Pisarev`; к ссылкам справа `Сообщить о проблеме` / `Report an issue` → `https://github.com/art-ps/siply/issues`.
 - Навигация в шапке не меняется.
+- Упоминание нотаризации убирается с видимых страниц (решение пользователя).
 
 ### 5. Лицензия
 
