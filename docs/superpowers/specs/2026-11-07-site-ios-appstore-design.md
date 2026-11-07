@@ -24,7 +24,7 @@ Siply вышел для iPhone в App Store: https://apps.apple.com/app/siply-si
 
 ## Не делаем
 
-- title, meta description, og/twitter, h1 — остаются про Mac (SEO).
+- title, meta description, og/twitter — остаются про Mac (SEO). h1 — «для macOS и iOS» (решение пользователя).
 - Шаги «Установка» — остаются про dmg.
 - Официальный бейдж Apple «Download on the App Store» — не ставим (моё решение; можно добавить позже).
 - sitemap/robots не трогаем.
