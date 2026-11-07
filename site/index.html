@@ -91,6 +91,26 @@
       ]
     },
     {
+      "@type": "SoftwareApplication",
+      "@id": "https://siply.top/#software-ios",
+      "name": "Siply",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "iOS 26.1 or later",
+      "isAccessibleForFree": true,
+      "license": "https://opensource.org/licenses/MIT",
+      "url": "https://siply.top/",
+      "downloadUrl": "https://apps.apple.com/app/siply-simple-player/id6828888848",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "url": "https://apps.apple.com/app/siply-simple-player/id6828888848"
+      },
+      "author": {
+        "@id": "https://siply.top/#author"
+      }
+    },
+    {
       "@type": "Person",
       "@id": "https://siply.top/#author",
       "name": "Artem Pisarev",
@@ -115,9 +135,13 @@
       <h1>Лёгкий музыкальный плеер для macOS, который играет прямо из папок</h1>
       <p class="sub">Открыл папку — слушаешь, без импорта и медиатеки. Siply — сокращение от Simple Player.</p>
       <div class="dl">
-        <a class="btn" id="download" data-umami-event="download" href="https://github.com/art-ps/siply/releases/download/v1.2.1/Siply-1.2.1.dmg">Скачать для macOS</a>
+        <div class="btns">
+          <a class="btn" id="download" data-umami-event="download" href="https://github.com/art-ps/siply/releases/download/v1.2.1/Siply-1.2.1.dmg">Скачать для macOS</a>
+          <a class="btn alt" data-umami-event="download-ios" href="https://apps.apple.com/app/siply-simple-player/id6828888848">Скачать в App Store</a>
+        </div>
         <span class="note" id="release">Версия 1.2.1 · 0,8 МБ</span>
         <span class="note">Бесплатно, открытый код · macOS 14+ · Apple Silicon и Intel</span>
+        <span class="note">iPhone · iOS 26.1+</span>
       </div>
     </div>
     <div class="hero-art">
@@ -178,6 +202,7 @@
       <div class="mini"><h3>Какие форматы он играет?</h3><p>Всё, что играет сама macOS: MP3, AAC/M4A, FLAC, WAV, AIFF и CAF, включая lossless. OGG и APE не поддерживаются.</p></div>
       <div class="mini"><h3>Нужна ли медиатека?</h3><p>Нет. Siply читает папки как есть и ничего не импортирует и не индексирует. Открыли папку — слушаете.</p></div>
       <div class="mini"><h3>Какой нужен Mac?</h3><p>macOS 14 или новее, Apple Silicon или Intel.</p></div>
+      <div class="mini"><h3>Есть ли Siply для iPhone?</h3><p>Да, <a href="https://apps.apple.com/app/siply-simple-player/id6828888848">в App Store</a>, бесплатно. Нужна iOS 26.1 или новее.</p></div>
     </div>
   </section>
   </main>

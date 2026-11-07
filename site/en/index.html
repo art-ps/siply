@@ -91,6 +91,26 @@
       ]
     },
     {
+      "@type": "SoftwareApplication",
+      "@id": "https://siply.top/#software-ios",
+      "name": "Siply",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "iOS 26.1 or later",
+      "isAccessibleForFree": true,
+      "license": "https://opensource.org/licenses/MIT",
+      "url": "https://siply.top/en/",
+      "downloadUrl": "https://apps.apple.com/app/siply-simple-player/id6828888848",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "url": "https://apps.apple.com/app/siply-simple-player/id6828888848"
+      },
+      "author": {
+        "@id": "https://siply.top/#author"
+      }
+    },
+    {
       "@type": "Person",
       "@id": "https://siply.top/#author",
       "name": "Artem Pisarev",
@@ -115,9 +135,13 @@
       <h1>A lightweight macOS music player that plays straight from your folders</h1>
       <p class="sub">Open a folder and listen — no import, no library. Siply stands for Simple Player.</p>
       <div class="dl">
-        <a class="btn" id="download" data-umami-event="download" href="https://github.com/art-ps/siply/releases/download/v1.2.1/Siply-1.2.1.dmg">Download for macOS</a>
+        <div class="btns">
+          <a class="btn" id="download" data-umami-event="download" href="https://github.com/art-ps/siply/releases/download/v1.2.1/Siply-1.2.1.dmg">Download for macOS</a>
+          <a class="btn alt" data-umami-event="download-ios" href="https://apps.apple.com/app/siply-simple-player/id6828888848">Download on the App Store</a>
+        </div>
         <span class="note" id="release">Version 1.2.1 · 0.8 MB</span>
         <span class="note">Free and open source · macOS 14+ · Apple Silicon and Intel</span>
+        <span class="note">iPhone · iOS 26.1+</span>
       </div>
     </div>
     <div class="hero-art">
@@ -178,6 +202,7 @@
       <div class="mini"><h3>Which formats does it play?</h3><p>Everything macOS plays: MP3, AAC/M4A, FLAC, WAV, AIFF and CAF, lossless included. OGG and APE are not supported.</p></div>
       <div class="mini"><h3>Do I need a library?</h3><p>No. Siply reads your folders as they are, with no import and no indexing. Open a folder and listen.</p></div>
       <div class="mini"><h3>Which Mac do I need?</h3><p>macOS 14 or later, Apple Silicon or Intel.</p></div>
+      <div class="mini"><h3>Is there Siply for iPhone?</h3><p>Yes, <a href="https://apps.apple.com/app/siply-simple-player/id6828888848">on the App Store</a>, free. Requires iOS 26.1 or later.</p></div>
     </div>
   </section>
   </main>
