@@ -9,7 +9,7 @@ Siply вышел для iPhone в App Store: https://apps.apple.com/app/siply-si
 ## Что меняется (`site/index.html` и `site/en/index.html` одинаково)
 
 1. **Hero, блок `.dl`.** Рядом с кнопкой «Скачать для macOS» — вторая кнопка-ссылка на App Store:
-   - RU «Скачать в App Store», EN «Download on the App Store»;
+   - RU «Скачать для iOS», EN «Download for iOS»;
    - `data-umami-event="download-ios"`;
    - вторичный стиль: контур и текст цвета `var(--accent)`, прозрачный фон (новый класс, например `.btn.alt`), чтобы Mac-кнопка оставалась главной;
    - кнопки в один ряд с переносом на узких экранах;
